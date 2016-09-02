@@ -1,0 +1,5 @@
+c:\users\klik0121\documents\visual studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\obj\Debug\ExpertSystemShell.csprojResolveAssemblyReference.cache
+c:\users\klik0121\documents\visual studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\bin\Debug\ExpertSystemShell.dll
+c:\users\klik0121\documents\visual studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\bin\Debug\ExpertSystemShell.pdb
+c:\users\klik0121\documents\visual studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\obj\Debug\ExpertSystemShell.dll
+c:\users\klik0121\documents\visual studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\obj\Debug\ExpertSystemShell.pdb
