@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ExpertSystemShell</RootNamespace>
     <AssemblyName>ExpertSystemShell</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Jigsaw">
+    <Reference Include="Jigsaw, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\elkdanger.jigsaw.1.0.0.0\lib\net452\Jigsaw.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,7 +47,13 @@
     <Compile Include="Builders\IStatementBuilder.cs" />
     <Compile Include="ExpertSystemBase.cs" />
     <Compile Include="ExplanationSystems\IExplanationSystem.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="IExpertSystem.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\ProductionRule.cs" />
+    <Compile Include="Parsers\Grammars\ProductionModel\ProductionActionGrammar.cs" />
+    <Compile Include="Parsers\Grammars\ProductionModel\ProductionExpressionGrammar.cs" />
+    <Compile Include="Parsers\Grammars\ProductionModel\ProductionFactGrammar.cs" />
+    <Compile Include="Parsers\Grammars\ProductionModel\ProductionRuleGrammar.cs" />
     <Compile Include="Parsers\IParser.cs" />
     <Compile Include="Solvers\ILogicalQueryParameter.cs" />
     <Compile Include="Solvers\ILogicalResult.cs" />

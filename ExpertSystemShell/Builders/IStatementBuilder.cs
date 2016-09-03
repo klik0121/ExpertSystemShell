@@ -12,7 +12,7 @@ namespace ExpertSystemShell.Builders
     /// Интерфейс для "построителей знаний". Парсер создаёт AST-дерево. Построитель создаёт 
     /// логическое правило из нода такого дерева.
     /// </summary>
-    protected interface IStatementBuilder
+    public interface IStatementBuilder
     {
         ILogicalStatement Build(Node node);
     }
