@@ -29,15 +29,15 @@ namespace Tests
         [TestMethod]
         public void TestLogicalExpression()
         {
-            string fact = "'погода - ветренно'";
+            string fact = "'погода - ветренно' или ('ветренно - да' и 'ветер - сильный')";
             string condition = fact;
-            Assert.IsTrue(ProductionExpressionGrammar.Expression.ExactMatch(condition));
+            Assert.IsTrue(ProductionExprGrammar.Expression.ExactMatch(condition));
             condition = "( " + fact + ")";
-            Assert.IsTrue(ProductionExpressionGrammar.Expression.ExactMatch(condition));
+            Assert.IsTrue(ProductionExprGrammar.Expression.ExactMatch(condition));
             condition = condition + " или " + fact;
-            Assert.IsTrue(ProductionExpressionGrammar.Expression.ExactMatch(condition));
+            Assert.IsTrue(ProductionExprGrammar.Expression.ExactMatch(condition));
             condition = condition + " и (" + condition + ")";
-            Assert.IsTrue(ProductionExpressionGrammar.Expression.ExactMatch(condition));
+            Assert.IsTrue(ProductionExprGrammar.Expression.ExactMatch(condition));
         }
         [TestMethod]
         public void TestProductionRule()

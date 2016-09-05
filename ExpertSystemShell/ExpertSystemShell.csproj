@@ -47,11 +47,22 @@
     <Compile Include="Builders\IStatementBuilder.cs" />
     <Compile Include="ExpertSystemBase.cs" />
     <Compile Include="ExplanationSystems\IExplanationSystem.cs" />
+    <Compile Include="Expressions\Associativity.cs" />
+    <Compile Include="Expressions\BinaryOperator.cs" />
+    <Compile Include="Expressions\Constant.cs" />
+    <Compile Include="Expressions\Expression.cs" />
+    <Compile Include="Expressions\ExpressionHelper.cs" />
+    <Compile Include="Expressions\FunctionCall.cs" />
+    <Compile Include="Expressions\IndexerCaller.cs" />
+    <Compile Include="Expressions\LogicalExpressionHelper.cs" />
+    <Compile Include="Expressions\Operator.cs" />
+    <Compile Include="Expressions\UnaryOperator.cs" />
+    <Compile Include="Expressions\Variable.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IExpertSystem.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProductionRule.cs" />
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionActionGrammar.cs" />
-    <Compile Include="Parsers\Grammars\ProductionModel\ProductionExpressionGrammar.cs" />
+    <Compile Include="Parsers\Grammars\ProductionModel\ProductionExprGrammar.cs" />
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionFactGrammar.cs" />
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionRuleGrammar.cs" />
     <Compile Include="Parsers\IParser.cs" />
@@ -73,6 +84,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
