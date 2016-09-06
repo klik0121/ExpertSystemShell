@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExpertSystemShell;
 using ExpertSystemShell.Parsers.Grammars.ProductionModel;
+using System.Text.RegularExpressions;
 
 namespace Tests
 {
@@ -42,7 +43,13 @@ namespace Tests
         [TestMethod]
         public void TestProductionRule()
         {
-            string rule = "если 'холодно - да' то 'будет дождь - да'";
+            string rule = "на случай дождя : если 'холодно - да' то 'будет дождь - да', 'взять зонт - да'";
+            Assert.IsTrue(ProductionRuleGrammar.ProductionRule.ExactMatch(rule));
+        }
+        [TestMethod]
+        public void TestProductionRuleWithName()
+        {
+            string rule = " имя из нескольких слов с пробелами : если 'холодно - да' то 'будет дождь - да'";
             Assert.IsTrue(ProductionRuleGrammar.ProductionRule.ExactMatch(rule));
         }
         [TestMethod]

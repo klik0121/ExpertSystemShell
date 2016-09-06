@@ -8,6 +8,6 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
 {
     public interface IProductionAction
     {
-
+        void Execute(IKnowledgeBase knBase);
     }
 }

@@ -67,7 +67,10 @@ namespace ExpertSystemShell.Expressions
         /// <param name="pair">Пара метка - значение.</param>
         protected void HandleBinaryOperator(KeyValuePair<string, string> pair)
         {
-            Operator o = binaryOperators[pair.Value];
+            string v = pair.Value;
+            foreach (var r in replacements)
+                v = r.Key.Replace(v, r.Value);
+            Operator o = binaryOperators[v];
             if (o as UnaryOperator == null)
             {
                 Operator currOperator = stack.Count > 0 ? stack.Peek() as Operator : null;

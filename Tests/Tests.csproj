@@ -59,6 +59,7 @@
     <Compile Include="ProductionGrammarTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LogicalExpressionTest.cs" />
+    <Compile Include="ProductionParsingTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExpertSystemShell\ExpertSystemShell.csproj">

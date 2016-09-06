@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\IAddFactActionBuilder.cs" />
     <Compile Include="Builders\IProductionActionBuilder.cs" />
     <Compile Include="Builders\IStatementBuilder.cs" />
     <Compile Include="Builders\ProductionRuleBuilder.cs" />
@@ -62,8 +63,11 @@
     <Compile Include="Expressions\Variable.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IExpertSystem.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\AddFactAction.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\IProductionAction.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\ProductionFact.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProductionRule.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\ProdRuleKnBase.cs" />
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionActionGrammar.cs" />
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionExprGrammar.cs" />
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionFactGrammar.cs" />
@@ -81,7 +85,6 @@
     <Compile Include="Solvers\IProductionSolver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeProjectArticle.html" />
     <Content Include="Parsers\Grammars\GrammarsNamespace.txt" />
   </ItemGroup>
   <ItemGroup>

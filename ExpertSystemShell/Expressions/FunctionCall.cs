@@ -168,5 +168,25 @@ namespace ExpertSystemShell.Expressions
         }
 
         #endregion
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            string result = name + "(";
+            for(int i = 0; i < args.Length; i++)
+            {
+                if (i == args.Length - 1)
+                {
+                    result += args[i].ToString() + ")";
+                }
+                else result += args[i].ToString() + ", ";
+            }
+            return result;
+        }
     }
 }

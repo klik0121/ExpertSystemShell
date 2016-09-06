@@ -13,8 +13,7 @@ namespace Tests
         [TestMethod]
         public void TestSimpleLogicalExpression()
         {
-            string expression = "'погода - ветренно'";
-           
+            string expression = "'погода - ветренно'";           
             Expression exp = eh.CreateExpression(expression);
             exp.SetVariable<string>("погода", "ветренно");
             Assert.IsTrue(exp.Calculate() == true);
@@ -29,7 +28,7 @@ namespace Tests
             Assert.IsTrue(exp.Calculate() == true);
         }
         [TestMethod]
-        public void TestParanExp()
+        public void TestParanExpression()
         {
             string expression = "'погода - ветренно' или ('ветренно - да' и 'ветер - сильный')";
             Expression exp = eh.CreateExpression(expression);
@@ -39,7 +38,7 @@ namespace Tests
             Assert.IsTrue(exp.Calculate() == true);
         }
         [TestMethod]
-        public void TestFullExp()
+        public void TestFullExpression()
         {
             string expression = "Не('погода - ветренно' или ('ветренно - да' и 'ветер - сильный'))";
             Expression exp = eh.CreateExpression(expression);

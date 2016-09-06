@@ -121,5 +121,16 @@ namespace ExpertSystemShell.Expressions
         {
             return new UnaryOperator(action, sign, associativity, precendence);
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return (sign + left.ToString());
+        }
     }
 }

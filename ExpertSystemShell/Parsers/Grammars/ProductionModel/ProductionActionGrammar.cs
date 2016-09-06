@@ -15,7 +15,7 @@ namespace ExpertSystemShell.Parsers.Grammars.ProductionModel
     {
         //пока есть только одно действие - добавление одного или нескольких фактов в базу
 
-        public static Rule AddFact = OneOrMore(ProductionFactGrammar.ProductionFact);
+        public static Rule AddFact = Node(ProductionFactGrammar.ProductionFact);
         public static Rule ProductionAction = AddFact;
         public static Rule Delimiter = MatchStringSet(",");
         public static Rule ProductionActionList = Node(ProductionAction +

@@ -27,7 +27,7 @@ namespace ExpertSystemShell.KnowledgeBases
         /// Добавляет заданное логическое утвреждение к существующей базе знаний.
         /// </summary>
         /// <param name="statement">The statement.</param>
-        public void AddStatement(ILogicalStatement statement)
+        public virtual void AddStatement(ILogicalStatement statement)
         {
             stService.AddStatement(statement);
         }
@@ -36,7 +36,7 @@ namespace ExpertSystemShell.KnowledgeBases
         /// Удаляет заданной логическое утверждение из существующе базы.
         /// </summary>
         /// <param name="statement">The statement.</param>
-        public void RemoveStatement(ILogicalStatement statement)
+        public virtual void RemoveStatement(ILogicalStatement statement)
         {
             stService.RemoveStatement(statement);
         }

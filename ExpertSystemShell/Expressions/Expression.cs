@@ -64,5 +64,13 @@ namespace ExpertSystemShell.Expressions
         public abstract object Clone();
 
         #endregion
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override abstract string ToString();
     }
 }

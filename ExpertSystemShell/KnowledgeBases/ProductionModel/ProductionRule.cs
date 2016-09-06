@@ -14,11 +14,40 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         protected Expression condition;
         protected IEnumerable<IProductionAction> actions;
 
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public Expression Condition
+        {
+            get { return condition; }
+            set { condition = value; }
+        }
+        public IEnumerable<IProductionAction> Actions
+        {
+            get { return actions; }
+            set { actions = value; }
+        }
+        public bool HasName
+        {
+            get { return name != null; }
+        }
+
+        public ProductionRule(string name, Expression condition,
+            IEnumerable<IProductionAction> actions)
+        {
+            this.name = name;
+            this.condition = condition;
+            this.actions = actions;
+        }
+
         #region ILogicalStatement Members
 
-        public void Execute()
+        public void Execute(IKnowledgeBase knBase)
         {
-            throw new NotImplementedException();
+            foreach (var action in actions)
+                action.Execute(knBase);
         }
 
         #endregion

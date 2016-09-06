@@ -9,11 +9,15 @@ using ExpertSystemShell.KnowledgeBases;
 namespace ExpertSystemShell.Builders
 {
     /// <summary>
-    /// Интерфейс для "построителей знаний". Парсер создаёт AST-дерево. Построитель создаёт 
-    /// логическое правило из нода такого дерева.
+    /// Интерфейс построителя для <see cref="ExpertSystemShell.KnowledgeBases.ILogicalStatement"/>.
     /// </summary>
     public interface IStatementBuilder
     {
+        /// <summary>
+        /// По заданному дереву строит экземпляр <see cref="ExpertSystemShell.KnowledgeBases.ILogicalStatement"/>.
+        /// </summary>
+        /// <param name="node">Корень дерева разбора.</param>
+        /// <returns>Возвращает построенный экземпляр <see cref="ExpertSystemShell.KnowledgeBases.ILogicalStatement"/>.</returns>
         ILogicalStatement Build(Node node);
     }
 }

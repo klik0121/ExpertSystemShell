@@ -15,8 +15,10 @@ namespace ExpertSystemShell.Parsers.Grammars.ProductionModel
     {
         public static Rule If = MatchStringSet("ЕСЛИ Если если");
         public static Rule Then = MatchStringSet("ТО То то");
+        public static Rule Name = Node(Pattern(@"(?<=\s*)(\w)(\s*\w)*(?=\s*:)"));
+        public static Rule OptName = Opt(Name + WS + MatchChar(':') + WS);
 
-        public static Rule ProductionRule = Node(If + WS +
+        public static Rule ProductionRule = Node(WS + OptName + If + WS +
             ProductionExprGrammar.Expression + WS + Then + WS +
             ProductionActionGrammar.ProductionActionList);
         public static Rule Delimiter = MatchStringSet(";");

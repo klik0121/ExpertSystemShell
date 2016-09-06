@@ -215,6 +215,7 @@ namespace ExpertSystemShell.Expressions
             {
                 usedLabels[pair.Key](pair);
             }
+            while (stack.Count > 0) output.Enqueue(stack.Pop());
             return ConstructExpressionTree().Simplify();
         }
         /// <summary>
