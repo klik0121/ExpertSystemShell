@@ -5,6 +5,9 @@ using ExpertSystemShell.Parsers.Grammars.ProductionModel;
 using ExpertSystemShell.KnowledgeBases.ProductionModel;
 using ExpertSystemShell.Builders;
 using ExpertSystemShell.Expressions;
+using ExpertSystemShell.Parsers;
+using ExpertSystemShell.KnowledgeBases;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Tests
@@ -34,6 +37,19 @@ namespace Tests
             Assert.IsTrue(r.Condition != null &&
                 r.Condition.ToString() == "холодно - да & влажность - высокая");
             Assert.IsTrue(r.Actions.Count() == 2);
+        }
+        [TestMethod]
+        public void TestParser()
+        {
+            string rules = "на случай дождя : если 'холодно - да' и 'влажность-высокая' то 'будет дождь - да', 'взять зонт - да'";
+            IParser parser = new PrModelParser(new LogicalExpressionHelper());
+            ILogicalStatement st = parser.ParseRule(rules);
+            Assert.IsTrue(st is ProductionRule); //правило построено правильно (см. предыдущий тест)
+            rules = rules + ";" + rules + ";" + rules + ";" + rules + ";";
+            IEnumerable<ILogicalStatement> statements = parser.ParseRules(rules);
+            //правила построены правильно (т.к. отдельные правила строятся правильно)
+            //проверим количество правил
+            Assert.IsTrue(statements.Count() == 4); 
         }
     }
 }

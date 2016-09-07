@@ -73,6 +73,8 @@
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionFactGrammar.cs" />
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionRuleGrammar.cs" />
     <Compile Include="Parsers\IParser.cs" />
+    <Compile Include="Parsers\ParsingException.cs" />
+    <Compile Include="Parsers\PrModelParser.cs" />
     <Compile Include="Solvers\ILogicalQueryParameter.cs" />
     <Compile Include="Solvers\ILogicalResult.cs" />
     <Compile Include="KnowledgeBases\AbstractKnowledgeBase.cs" />

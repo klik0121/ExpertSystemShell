@@ -31,7 +31,6 @@ namespace ExpertSystemShell.KnowledgeBases
         {
             stService.AddStatement(statement);
         }
-
         /// <summary>
         /// Удаляет заданной логическое утверждение из существующе базы.
         /// </summary>
@@ -40,7 +39,6 @@ namespace ExpertSystemShell.KnowledgeBases
         {
             stService.RemoveStatement(statement);
         }
-
         /// <summary>
         /// Проверяет на конфликк два правила. Возвращает true, если два правила конфликуют.
         /// </summary>
@@ -48,7 +46,6 @@ namespace ExpertSystemShell.KnowledgeBases
         /// <param name="st2">The ST2.</param>
         /// <returns></returns>
         public abstract bool CheckConflict(ILogicalStatement st1, ILogicalStatement st2);
-
         /// <summary>
         /// Разрешает логические конфликты в базе.
         /// </summary>
