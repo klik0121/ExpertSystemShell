@@ -45,6 +45,7 @@ namespace Tests
         {
             string rule = "на случай дождя : если 'холодно - да' то 'будет дождь - да', 'взять зонт - да'";
             Assert.IsTrue(ProductionRuleGrammar.ProductionRule.ExactMatch(rule));
+            
         }
         [TestMethod]
         public void TestProductionRuleWithName()
@@ -58,6 +59,12 @@ namespace Tests
             string rule = "если 'холодно - да' то 'будет дождь - да'";
             rule = rule + ";" + rule + " ; " + rule;
             Assert.IsTrue(ProductionRuleGrammar.ProductionRuleList.ExactMatch(rule));
+        }
+        [TestMethod]
+        public void TestFactQuery()
+        {
+            string query = "если 'погода - ветренно', 'дождь - да' то взять зонт=? одеться теплее=?";
+            Assert.IsTrue(ProductionQueryGrammar.Query.ExactMatch(query));
         }
     }
 }

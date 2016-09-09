@@ -68,9 +68,11 @@
     <Compile Include="KnowledgeBases\ProductionModel\ProductionFact.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProductionRule.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProdRuleKnBase.cs" />
+    <Compile Include="KnowledgeBases\StorageServices\PrMInMemoryStService.cs" />
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionActionGrammar.cs" />
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionExprGrammar.cs" />
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionFactGrammar.cs" />
+    <Compile Include="Parsers\Grammars\ProductionModel\ProductionQueryGrammar.cs" />
     <Compile Include="Parsers\Grammars\ProductionModel\ProductionRuleGrammar.cs" />
     <Compile Include="Parsers\IParser.cs" />
     <Compile Include="Parsers\ParsingException.cs" />
