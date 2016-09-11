@@ -8,5 +8,6 @@ namespace ExpertSystemShell.Solvers
 {
     public interface ILogicalResult
     {
+
     }
 }

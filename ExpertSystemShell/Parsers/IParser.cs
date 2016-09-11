@@ -18,7 +18,7 @@ namespace ExpertSystemShell.Parsers
         /// </summary>
         /// <param name="query">Строка-запрос.</param>
         /// <returns>Возвращает перечисление параметров запроса.</returns>
-        IEnumerable<ILogicalQueryParameter> ParseQuery(string query);
+        ILogicalQuery ParseQuery(string query);
         /// <summary>
         /// Разбирает логическое правило.
         /// </summary>

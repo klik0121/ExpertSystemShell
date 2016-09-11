@@ -8,6 +8,7 @@ using ExpertSystemShell.Parsers.Grammars.ProductionModel;
 using Diggins.Jigsaw;
 using ExpertSystemShell.Expressions;
 using ExpertSystemShell.KnowledgeBases;
+using ExpertSystemShell.Solvers;
 
 namespace ExpertSystemShell.Parsers
 {
@@ -17,7 +18,8 @@ namespace ExpertSystemShell.Parsers
     /// <seealso cref="ExpertSystemShell.Parsers.IParser" />
     public class PrModelParser: IParser
     {
-        protected Dictionary<string, IStatementBuilder> builders;
+        protected Dictionary<string, IBuilder<ILogicalStatement>> stBuilders;
+        protected Dictionary<string, IBuilder<ILogicalQuery>> qBuilders;
         protected ExpressionHelper eh;
 
         /// <summary>
@@ -27,9 +29,12 @@ namespace ExpertSystemShell.Parsers
         public PrModelParser(ExpressionHelper eh)
         {
             this.eh = eh;
-            builders = new Dictionary<string, IStatementBuilder>();
-            builders.Add(ProductionRuleGrammar.ProductionRule.Name,
+            stBuilders = new Dictionary<string, IBuilder<ILogicalStatement>>();
+            stBuilders.Add(ProductionRuleGrammar.ProductionRule.Name,
                 new ProductionRuleBuilder(eh));
+            qBuilders = new Dictionary<string, IBuilder<ILogicalQuery>>();
+            qBuilders.Add(ProductionQueryGrammar.Query.Name,
+                new ProductionQueryBuilder());
         }
 
         #region IParser Members
@@ -41,11 +46,19 @@ namespace ExpertSystemShell.Parsers
         /// <returns>
         /// Возвращает перечисление параметров запроса.
         /// </returns>
-        public IEnumerable<Solvers.ILogicalQueryParameter> ParseQuery(string query)
+        public Solvers.ILogicalQuery ParseQuery(string query)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                Node q = ProductionQueryGrammar.Query.Parse(query)[0];
+                return qBuilders[q.Label].Build(q);
+            }
+            catch
+            {
+                throw new ParsingException("Заданная строка не является запросом.");
+            }
 
+        }
         /// <summary>
         /// Разбирает логическое правило.
         /// </summary>
@@ -59,14 +72,13 @@ namespace ExpertSystemShell.Parsers
             try
             {
                 Node n = ProductionRuleGrammar.ProductionRule.Parse(rule)[0];
-                return builders[n.Label].Build(n);
+                return stBuilders[n.Label].Build(n);
             }
             catch
             {
                 throw new ParsingException("Заданная строка не является правилом.");
             }
         }
-
         /// <summary>
         /// Разбирает список правил.
         /// </summary>
@@ -80,7 +92,7 @@ namespace ExpertSystemShell.Parsers
                 Node n = ProductionRuleGrammar.ProductionRuleList.Parse(rules)[0];
                 foreach(var child in n.Nodes)
                 {
-                    statements.Add(builders[child.Label].Build(child));
+                    statements.Add(stBuilders[child.Label].Build(child));
                 }
             }
             catch
