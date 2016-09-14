@@ -9,11 +9,9 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
 {
     public class ProdRuleKnBase: AbstractKnowledgeBase
     {
-        protected List<ProductionFact> workMem;
 
         public ProdRuleKnBase(IStorageService stService): base(stService)
         {
-            this.workMem = new List<ProductionFact>();
         }
 
         /// <summary>
@@ -36,13 +34,22 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
             throw new NotImplementedException();
         }
 
-        public void AddFact(ProductionFact fact)
+        /// <summary>
+        /// Проверяет истинность логического высказывания.
+        /// </summary>
+        /// <param name="statement">Логическое утверждение..</param>
+        /// <returns>
+        /// Возвращает <c>true</c>, если правило можно выполнить.
+        /// </returns>
+        public override bool CheckStatement(ILogicalStatement statement)
         {
-            workMem.Add(fact);
-        }
-        public void ClearWorkMemory()
-        {
-            workMem.Clear();
+            ProductionRule rule = (ProductionRule)statement;
+            foreach(string variableName in rule.Condition.VariableNames)
+            {
+                foreach (var fact in workMemory)
+                    rule.Condition.SetVariable(fact.Name, fact);
+            }
+            return rule.Condition.Calculate() == true;
         }
     }
 }

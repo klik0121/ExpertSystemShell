@@ -15,11 +15,19 @@ namespace ExpertSystemShell.KnowledgeBases
     {
         protected IStorageService stService;
         protected KnowledgeBaseType type; //???
+        protected List<IData> workMemory;
+        public IEnumerable<IData> CurrentData
+        {
+            get { return workMemory; }
+        }
 
         public AbstractKnowledgeBase(IStorageService stService)
         {
             this.stService = stService;
+            this.workMemory = new List<IData>();
         }
+
+
 
         #region IKnowledgeBase Members
 
@@ -52,5 +60,53 @@ namespace ExpertSystemShell.KnowledgeBases
         public abstract void RemoveConflicts();
 
         #endregion
+
+        #region IKnowledgeBase Members
+
+
+        /// <summary>
+        /// Добавляет элементарные знания в рабочую память.
+        /// </summary>
+        /// <param name="data"></param>
+        public void AddData(IData data)
+        {
+            workMemory.Add(data);
+        }
+        /// <summary>
+        /// Очищает рябочую память.
+        /// </summary>
+        public void ClearWorkMemory()
+        {
+            workMemory.Clear();
+        }
+        /// <summary>
+        /// Проверяет истинность логического высказывания.
+        /// </summary>
+        /// <param name="statement">Логическое утверждение..</param>
+        /// <returns>
+        /// Возвращает <c>true</c>, если правило можно выполнить.
+        /// </returns>
+        public abstract bool CheckStatement(ILogicalStatement statement);
+
+        #endregion
+
+        #region IEnumerable<ILogicalStatement> Members
+
+        public IEnumerator<ILogicalStatement> GetEnumerator()
+        {
+            return stService.GetEnumerator();
+        }
+
+        #endregion
+
+        #region IEnumerable Members
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion
+
     }
 }

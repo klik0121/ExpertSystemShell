@@ -27,5 +27,33 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
             this.name = name;
             this.value = value;
         }
+
+        public static bool operator ==(ProductionFact fact, string value)
+        {
+            return fact.value == value;
+        }
+        public static bool operator !=(ProductionFact fact, string value)
+        {
+            return fact.value != value;
+        }
+        public static bool operator ==(string value, ProductionFact fact)
+        {
+            return fact.value == value;
+        }
+        public static bool operator !=(string value, ProductionFact fact)
+        {
+            return fact.value != value;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("'{0} - {1}'", name, value != null ? value : "неизвестно");
+        }
     }
 }

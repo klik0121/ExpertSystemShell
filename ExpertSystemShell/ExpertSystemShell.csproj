@@ -88,7 +88,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solvers\ILogicalSolver.cs" />
     <Compile Include="Solvers\IProductionSolver.cs" />
+    <Compile Include="Solvers\ProductionModel\DirectProductionSolver.cs" />
     <Compile Include="Solvers\ProductionModel\ProductionFactQuery.cs" />
+    <Compile Include="Solvers\ProductionModel\ResultingFactSet.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Parsers\Grammars\GrammarsNamespace.txt" />

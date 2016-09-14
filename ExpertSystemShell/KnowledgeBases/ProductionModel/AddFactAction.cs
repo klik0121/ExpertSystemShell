@@ -41,7 +41,7 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         /// <param name="knBase">База знаний.</param>
         public void Execute(IKnowledgeBase knBase)
         {
-            ((ProdRuleKnBase)knBase).AddFact(Fact);
+            knBase.AddData(fact);
         }
 
         #endregion

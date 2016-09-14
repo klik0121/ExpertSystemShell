@@ -60,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LogicalExpressionTest.cs" />
     <Compile Include="ProductionParsingTest.cs" />
+    <Compile Include="ProductionSolversTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExpertSystemShell\ExpertSystemShell.csproj">

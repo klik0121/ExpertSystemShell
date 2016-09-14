@@ -16,7 +16,7 @@ namespace ExpertSystemShell
     /// "на лету". Возможно, нужно будет сделать класс действительным вместо абстрактного.
     /// </summary>
     /// <seealso cref="ExpertSystemShell.IExpertSystem" />
-    public abstract class ExpertSystemBase: IExpertSystem
+    public class ExpertSystemBase: IExpertSystem
     {
         protected IKnowledgeBase knBase; //содержит заменяемое хранилище и базу
         protected ILogicalSolver solver; //заменяемый "решатель"
@@ -24,13 +24,11 @@ namespace ExpertSystemShell
         protected IExplanationSystem explSystem; //заменяемая система объяснений
         protected IEnumerable<ILogicalResult> conclusion; //предыдущий вывод
 
-        public ExpertSystemBase(IKnowledgeBase knBase, ILogicalSolver solver, IParser parser,
-            IExplanationSystem explSystem)
+        public ExpertSystemBase(IKnowledgeBase knBase, ILogicalSolver solver, IParser parser)
         {
             this.knBase = knBase;
             this.solver = solver;
             this.parser = parser;
-            this.explSystem = explSystem;
         }
 
         #region IExpertSystem Members
@@ -47,7 +45,6 @@ namespace ExpertSystemShell
             conclusion = solver.GetConclusion(parser.ParseQuery(query));
             return conclusion.Last();
         }
-
         /// <summary>
         /// Получает строковое объяснение предыдущего вывода.
         /// </summary>
@@ -57,6 +54,13 @@ namespace ExpertSystemShell
         public string GetExplanation()
         {
             return explSystem.GetExplanation(conclusion);
+        }
+        public void AddRules(string rules)
+        {
+            foreach(var rule in parser.ParseRules(rules))
+            {
+                knBase.AddStatement(rule);
+            }
         }
 
         #endregion

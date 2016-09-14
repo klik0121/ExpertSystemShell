@@ -16,12 +16,6 @@ namespace ExpertSystemShell.Solvers
     public interface IProductionSolver: ILogicalSolver
     {
         /// <summary>
-        /// Проверяет на соответствие 
-        /// </summary>
-        /// <param name="statement">The statement.</param>
-        /// <returns></returns>
-        bool CheckStatement(ILogicalStatement statement);
-        /// <summary>
         /// Выполняет правую часть продукционного правила.
         /// </summary>
         /// <param name="statement">The statement.</param>
