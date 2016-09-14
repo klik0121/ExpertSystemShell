@@ -11,7 +11,7 @@ namespace ExpertSystemShell.Solvers
     /// </summary>
     public interface ILogicalSolver
     {
-        ILogicalResult GetResult(IEnumerable<ILogicalQueryParameter> args);
-        IEnumerable<ILogicalResult> GetConclusion(IEnumerable<ILogicalQueryParameter> args);
+        ILogicalResult GetResult(ILogicalQuery query);
+        IEnumerable<ILogicalResult> GetConclusion(ILogicalQuery query);
     }
 }

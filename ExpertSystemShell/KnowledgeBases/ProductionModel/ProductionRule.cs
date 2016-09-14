@@ -12,7 +12,7 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
     {
         protected string name;
         protected Expression condition;
-        protected IEnumerable<IProductionAction> actions;
+        protected IEnumerable<IKnowledgeBaseAction> actions;
 
         public string Name
         {
@@ -24,7 +24,7 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
             get { return condition; }
             set { condition = value; }
         }
-        public IEnumerable<IProductionAction> Actions
+        public IEnumerable<IKnowledgeBaseAction> Actions
         {
             get { return actions; }
             set { actions = value; }
@@ -35,7 +35,7 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         }
 
         public ProductionRule(string name, Expression condition,
-            IEnumerable<IProductionAction> actions)
+            IEnumerable<IKnowledgeBaseAction> actions)
         {
             this.name = name;
             this.condition = condition;

@@ -11,15 +11,11 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
     {
         protected List<ProductionFact> workMem;
 
-
-        public void AddFact(ProductionFact fact)
-        {
-            workMem.Add(fact);
-        }
         public ProdRuleKnBase(IStorageService stService): base(stService)
         {
             this.workMem = new List<ProductionFact>();
         }
+
         /// <summary>
         /// Проверяет на конфликк два правила. Возвращает true, если два правила конфликуют.
         /// </summary>
@@ -29,7 +25,7 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         /// <exception cref="System.NotImplementedException"></exception>
         public override bool CheckConflict(ILogicalStatement st1, ILogicalStatement st2)
         {
-            throw new NotImplementedException();
+            return false;
         }
         /// <summary>
         /// Разрешает логические конфликты в базе.
@@ -38,6 +34,15 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         public override void RemoveConflicts()
         {
             throw new NotImplementedException();
+        }
+
+        public void AddFact(ProductionFact fact)
+        {
+            workMem.Add(fact);
+        }
+        public void ClearWorkMemory()
+        {
+            workMem.Clear();
         }
     }
 }

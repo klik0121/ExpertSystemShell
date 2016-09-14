@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ExpertSystemShell.KnowledgeBases;
 using ExpertSystemShell.KnowledgeBases.ProductionModel;
 using ExpertSystemShell.Expressions;
 using Diggins.Jigsaw;
@@ -14,10 +15,10 @@ namespace ExpertSystemShell.Builders
     /// Построитель для <see cref="ExpertSystemShell.KnowledgeBases.ProductionModel.ProductionRule"/>.
     /// </summary>
     /// <seealso cref="ExpertSystemShell.Builders.IStatementBuilder" />
-    public class ProductionRuleBuilder: IStatementBuilder
+    public class ProductionRuleBuilder: IBuilder<ILogicalStatement>
     {
         protected ExpressionHelper eh;
-        protected Dictionary<string, IProductionActionBuilder> builders;
+        protected Dictionary<string, IBuilder<IKnowledgeBaseAction>> builders;
 
         /// <summary>
         /// Инициализирует новый экземпляр <see cref="ProductionRuleBuilder"/>.
@@ -26,7 +27,7 @@ namespace ExpertSystemShell.Builders
         public ProductionRuleBuilder(ExpressionHelper eh)
         {
             this.eh = eh;
-            this.builders = new Dictionary<string, IProductionActionBuilder>();
+            this.builders = new Dictionary<string, IBuilder<IKnowledgeBaseAction>>();
             builders.Add(ProductionActionGrammar.AddFact.Name, new AddFactActionBuilder());
         }
 
@@ -48,7 +49,7 @@ namespace ExpertSystemShell.Builders
                 { return a.Label == ProductionActionGrammar.ProductionActionList.Name; });
             Expression expression = eh.CreateExpression(condition);
             string ruleName = name == null ? null : name.Text;
-            List<IProductionAction> actions = new List<IProductionAction>();
+            List<IKnowledgeBaseAction> actions = new List<IKnowledgeBaseAction>();
             foreach (var n in actionList.Nodes)
                 actions.Add(builders[n.Label].Build(n));
             return new ProductionRule(ruleName, expression, actions);

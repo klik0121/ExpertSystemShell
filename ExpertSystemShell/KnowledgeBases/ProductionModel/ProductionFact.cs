@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExpertSystemShell.KnowledgeBases.ProductionModel
 {
-    public class ProductionFact
+    public class ProductionFact: IData
     {
         protected string name;
         protected string value;

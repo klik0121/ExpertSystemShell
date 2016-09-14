@@ -8,7 +8,7 @@ namespace Tests
     [TestClass]
     public class LogicalExpressionTest
     {
-        ExpressionHelper eh = new LogicalExpressionHelper();
+        protected ExpressionHelper eh = new LogicalExpressionHelper();
 
         [TestMethod]
         public void TestSimpleLogicalExpression()

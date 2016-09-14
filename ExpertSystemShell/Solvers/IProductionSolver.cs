@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExpertSystemShell.KnowledgeBases;
+using ExpertSystemShell.KnowledgeBases.ProductionModel;
 
 namespace ExpertSystemShell.Solvers
 {
