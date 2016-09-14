@@ -93,6 +93,7 @@
     <Compile Include="Solvers\ProductionModel\ResultingFactSet.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="base.txt" />
     <Content Include="Parsers\Grammars\GrammarsNamespace.txt" />
   </ItemGroup>
   <ItemGroup>
