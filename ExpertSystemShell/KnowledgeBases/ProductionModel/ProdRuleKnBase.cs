@@ -33,7 +33,6 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         {
             throw new NotImplementedException();
         }
-
         /// <summary>
         /// Проверяет истинность логического высказывания.
         /// </summary>

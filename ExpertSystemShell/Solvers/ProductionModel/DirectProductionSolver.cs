@@ -24,23 +24,16 @@ namespace ExpertSystemShell.Solvers.ProductionModel
         #region IProductionSolver Members
 
         /// <summary>
-        /// Выполняет правую часть продукционного правила.
-        /// </summary>
-        /// <param name="statement">The statement.</param>
-        public void ExecuteStatement(KnowledgeBases.ILogicalStatement statement)
-        {
-            statement.Execute(knBase);
-        }
-
-        /// <summary>
         /// Выбирает одно правило из оставшихся равноправных правил, используя какую-нибудь
         /// эвристику.
         /// </summary>
         /// <param name="statements">The statements.</param>
         /// <returns></returns>
-        public KnowledgeBases.ILogicalStatement ChooseOne(IEnumerable<KnowledgeBases.ILogicalStatement> statements)
-        {
-            return statements.First();
+        public KnowledgeBases.ILogicalStatement ChooseOne(ICollection<KnowledgeBases.ILogicalStatement> statements)
+        {           
+            ILogicalStatement result = statements.Last();
+            statements.Remove(result);
+            return result;
         }
 
         #endregion
@@ -50,35 +43,31 @@ namespace ExpertSystemShell.Solvers.ProductionModel
         /// <summary>
         /// Получает ответ на запроса пользователя.
         /// </summary>
-        /// <param name="query">Запрос к логической базе знаний..</param>
+        /// <param name="query">Запрос к базе знаний..</param>
         /// <returns>
         /// Возвращает ответ на запрос пользователя.
         /// </returns>
         public ILogicalResult GetResult(ILogicalQuery query)
         {
+            knBase.ClearWorkMemory();
             this.cachedQuery = query;
             cachedResult.Clear();
-            IEnumerable<IKnowledgeBaseAction> init = query.GetPreQueryAction();
+            IEnumerable<IKnowledgeBaseAction> init = query.GetPreQueryActions();
             foreach(var item in init)
                 item.Execute(knBase);
             List<IData> queriedData = query.GetQueriedItems().ToList();
-            List<ILogicalStatement> executedStatements = new List<ILogicalStatement>();
-            IEnumerable<ILogicalStatement> ready = from ILogicalStatement r in knBase
-                                                   where
-                                                       !executedStatements.Contains(r) &&
-                                                       knBase.CheckStatement(r)
-                                                   select r;
-            while (ready.Count() > 0 &&
-                queriedData.Count((a) => { return a.Value == null; }) > 0) 
+            List<ILogicalStatement> ready = new List<ILogicalStatement>();
+            AddRecentRules(ready);
+            while (ready.Count > 0 && queriedData.Count((a) => { return a.Value == null; }) > 0) 
             {
                 ILogicalStatement st = ChooseOne(ready);
                 st.Execute(knBase);
-                executedStatements.Add(st);
-                foreach(IData data in knBase.CurrentData)
+                AddRecentRules(ready);
+                foreach (IData data in knBase.CurrentData)
                 {
-                    foreach(IData qData in queriedData)
+                    foreach (IData qData in queriedData)
                     {
-                        if(qData.Value == null && qData.Name == data.Name)
+                        if (qData.Value == null && qData.Name == data.Name)
                         {
                             qData.Value = data.Value;
                         }
@@ -105,5 +94,17 @@ namespace ExpertSystemShell.Solvers.ProductionModel
         }
 
         #endregion
+
+        protected void AddRecentRules(List<ILogicalStatement> ready)
+        {
+            if (knBase.StateChanged)
+            {
+                foreach (ILogicalStatement statement in knBase)
+                {
+                    if (!ready.Contains(statement) && knBase.CheckStatement(statement))
+                        ready.Add(statement);
+                }
+            }
+        }
     }
 }

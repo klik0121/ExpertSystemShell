@@ -21,6 +21,6 @@ namespace ExpertSystemShell.Solvers
         /// Возвращает перечисление, содержащие действия по инициализации запроса.
         /// </summary>
         /// <returns>Возвращает перечисление, содержащие действия по инициализации запроса.</returns>
-        IEnumerable<IKnowledgeBaseAction> GetPreQueryAction();
+        IEnumerable<IKnowledgeBaseAction> GetPreQueryActions();
     }
 }

@@ -27,7 +27,7 @@ namespace ExpertSystemShell.Solvers.ProductionModel
         {
             return queriedFacts;
         }
-        public IEnumerable<IKnowledgeBaseAction> GetPreQueryAction()
+        public IEnumerable<IKnowledgeBaseAction> GetPreQueryActions()
         {
             return inputFacts;
         }

@@ -15,6 +15,10 @@ namespace ExpertSystemShell.KnowledgeBases
         {
             get;
         }
+        bool StateChanged
+        {
+            get;
+        }
 
         /// <summary>
         /// Добавляет заданное логическое утвреждение к существующей базе знаний.

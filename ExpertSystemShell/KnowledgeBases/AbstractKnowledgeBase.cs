@@ -16,9 +16,19 @@ namespace ExpertSystemShell.KnowledgeBases
         protected IStorageService stService;
         protected KnowledgeBaseType type; //???
         protected List<IData> workMemory;
+        protected bool stateChanged;
+
         public IEnumerable<IData> CurrentData
         {
-            get { return workMemory; }
+            get 
+            {
+                stateChanged = false;
+                return workMemory;
+            }
+        }
+        public bool StateChanged
+        {
+            get { return stateChanged; }
         }
 
         public AbstractKnowledgeBase(IStorageService stService)
@@ -26,8 +36,6 @@ namespace ExpertSystemShell.KnowledgeBases
             this.stService = stService;
             this.workMemory = new List<IData>();
         }
-
-
 
         #region IKnowledgeBase Members
 
@@ -37,6 +45,7 @@ namespace ExpertSystemShell.KnowledgeBases
         /// <param name="statement">The statement.</param>
         public virtual void AddStatement(ILogicalStatement statement)
         {
+            stateChanged = true;
             stService.AddStatement(statement);
         }
         /// <summary>
@@ -45,6 +54,7 @@ namespace ExpertSystemShell.KnowledgeBases
         /// <param name="statement">The statement.</param>
         public virtual void RemoveStatement(ILogicalStatement statement)
         {
+            stateChanged = true;
             stService.RemoveStatement(statement);
         }
         /// <summary>
@@ -70,13 +80,18 @@ namespace ExpertSystemShell.KnowledgeBases
         /// <param name="data"></param>
         public void AddData(IData data)
         {
-            workMemory.Add(data);
+            if (!workMemory.Contains(data))
+            {
+                workMemory.Add(data);
+                stateChanged = true;
+            }
         }
         /// <summary>
         /// Очищает рябочую память.
         /// </summary>
         public void ClearWorkMemory()
         {
+            stateChanged = true;
             workMemory.Clear();
         }
         /// <summary>

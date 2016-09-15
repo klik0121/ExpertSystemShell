@@ -16,16 +16,11 @@ namespace ExpertSystemShell.Solvers
     public interface IProductionSolver: ILogicalSolver
     {
         /// <summary>
-        /// Выполняет правую часть продукционного правила.
-        /// </summary>
-        /// <param name="statement">The statement.</param>
-        void ExecuteStatement(ILogicalStatement statement);
-        /// <summary>
         /// Выбирает одно правило из оставшихся равноправных правил, используя какую-нибудь 
         /// эвристику (хоть рандомом).
         /// </summary>
         /// <param name="statements">The statements.</param>
         /// <returns></returns>
-        ILogicalStatement ChooseOne(IEnumerable<ILogicalStatement> statements);
+        ILogicalStatement ChooseOne(ICollection<ILogicalStatement> statements);
     }
 }

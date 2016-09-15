@@ -59,8 +59,8 @@ namespace Tests
             IParser parser = new PrModelParser(new LogicalExpressionHelper());
             ILogicalQuery q = parser.ParseQuery(query);
             Assert.IsTrue(q.GetQueriedItems().Count() == 2);
-            Assert.IsTrue(q.GetPreQueryAction().Count() == 2);
-            Assert.IsTrue(q.GetPreQueryAction().All((a) => { return a is AddFactAction; }));
+            Assert.IsTrue(q.GetPreQueryActions().Count() == 2);
+            Assert.IsTrue(q.GetPreQueryActions().All((a) => { return a is AddFactAction; }));
             Assert.IsTrue(q.GetQueriedItems().All((a) => { return a is ProductionFact; }));
         }
     }

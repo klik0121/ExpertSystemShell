@@ -55,5 +55,13 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         {
             return string.Format("'{0} - {1}'", name, value != null ? value : "неизвестно");
         }
+        public override int GetHashCode()
+        {
+            return name.GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            return (obj is ProductionFact && this.GetHashCode() == obj.GetHashCode());
+        }
     }
 }
