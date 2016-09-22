@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ExpertSystemShell.KnowledgeBases;
 
 namespace ExpertSystemShell.KnowledgeBases
 {
@@ -12,6 +13,6 @@ namespace ExpertSystemShell.KnowledgeBases
     public interface ILogicalStatement
     {
         //пока не понятно, что включать в интерфейс
-        void Execute();
+        void Execute(IKnowledgeBase knBase);
     }
 }

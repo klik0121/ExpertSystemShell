@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ExpertSystemShell</RootNamespace>
     <AssemblyName>ExpertSystemShell</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Jigsaw">
+    <Reference Include="Jigsaw, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\elkdanger.jigsaw.1.0.0.0\lib\net452\Jigsaw.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,12 +44,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\IStatementBuilder.cs" />
+    <Compile Include="Builders\AddFactActionBuilder.cs" />
+    <Compile Include="Builders\IBuilder.cs" />
+    <Compile Include="Builders\ProductionQueryBuilder.cs" />
+    <Compile Include="Builders\ProductionRuleBuilder.cs" />
     <Compile Include="ExpertSystemBase.cs" />
     <Compile Include="ExplanationSystems\IExplanationSystem.cs" />
+    <Compile Include="Expressions\Associativity.cs" />
+    <Compile Include="Expressions\BinaryOperator.cs" />
+    <Compile Include="Expressions\Constant.cs" />
+    <Compile Include="Expressions\Expression.cs" />
+    <Compile Include="Expressions\ExpressionHelper.cs" />
+    <Compile Include="Expressions\FunctionCall.cs" />
+    <Compile Include="Expressions\IndexerCaller.cs" />
+    <Compile Include="Expressions\LogicalExpressionHelper.cs" />
+    <Compile Include="Expressions\Operator.cs" />
+    <Compile Include="Expressions\UnaryOperator.cs" />
+    <Compile Include="Expressions\Variable.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="IExpertSystem.cs" />
+    <Compile Include="KnowledgeBases\IData.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\AddFactAction.cs" />
+    <Compile Include="KnowledgeBases\IKnowledgeBaseAction.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\ProductionFact.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\ProductionRule.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\ProdRuleKnBase.cs" />
+    <Compile Include="KnowledgeBases\StorageServices\PrMInMemoryStService.cs" />
+    <Compile Include="Parsers\Grammars\ProductionModel\ProductionActionGrammar.cs" />
+    <Compile Include="Parsers\Grammars\ProductionModel\ProductionExprGrammar.cs" />
+    <Compile Include="Parsers\Grammars\ProductionModel\ProductionFactGrammar.cs" />
+    <Compile Include="Parsers\Grammars\ProductionModel\ProductionQueryGrammar.cs" />
+    <Compile Include="Parsers\Grammars\ProductionModel\ProductionRuleGrammar.cs" />
     <Compile Include="Parsers\IParser.cs" />
-    <Compile Include="Solvers\ILogicalQueryParameter.cs" />
+    <Compile Include="Parsers\ParsingException.cs" />
+    <Compile Include="Parsers\PrModelParser.cs" />
+    <Compile Include="Solvers\ILogicalQuery.cs" />
     <Compile Include="Solvers\ILogicalResult.cs" />
     <Compile Include="KnowledgeBases\AbstractKnowledgeBase.cs" />
     <Compile Include="KnowledgeBases\IKnowledgeBase.cs" />
@@ -57,14 +88,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solvers\ILogicalSolver.cs" />
     <Compile Include="Solvers\IProductionSolver.cs" />
+    <Compile Include="Solvers\ProductionModel\DirectProductionSolver.cs" />
+    <Compile Include="Solvers\ProductionModel\ProductionFactQuery.cs" />
+    <Compile Include="Solvers\ProductionModel\ResultingFactSet.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeProjectArticle.html" />
+    <Content Include="base.txt" />
     <Content Include="Parsers\Grammars\GrammarsNamespace.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

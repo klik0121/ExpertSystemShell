@@ -24,5 +24,6 @@ namespace ExpertSystemShell
         /// </summary>
         /// <returns>Возвращает строковое объяснение.</returns>
         string GetExplanation();
+        void AddRules(string rules);
     }
 }
