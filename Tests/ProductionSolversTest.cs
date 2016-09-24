@@ -19,6 +19,7 @@ namespace Tests
     public class ProductionSolversTest
     {
         IExpertSystem expert;
+
         [TestMethod]
         public void TestDirectSolver()
         {

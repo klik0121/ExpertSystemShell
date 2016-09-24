@@ -52,6 +52,10 @@ namespace ExpertSystemShell.Expressions
         {
             get;
         }
+        public abstract List<Expression> Descendants
+        {
+            get;
+        }
 
         #region ICloneable Members
 
@@ -72,5 +76,10 @@ namespace ExpertSystemShell.Expressions
         /// A <see cref="System.String" /> that represents this instance.
         /// </returns>
         public override abstract string ToString();
+        /// <summary>
+        /// Создаёт полную копию текущего выражения.
+        /// </summary>
+        /// <returns>Возвращает полную копию текущего выражения.</returns>
+        public abstract Expression Copy();
     }
 }

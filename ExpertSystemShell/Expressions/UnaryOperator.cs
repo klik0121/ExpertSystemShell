@@ -119,7 +119,8 @@ namespace ExpertSystemShell.Expressions
         /// </returns>
         public override object Clone()
         {
-            return new UnaryOperator(action, sign, associativity, precendence);
+            UnaryOperator uo = new UnaryOperator(action, sign, associativity, precendence);
+            return uo;
         }
 
         /// <summary>
@@ -130,7 +131,19 @@ namespace ExpertSystemShell.Expressions
         /// </returns>
         public override string ToString()
         {
-            return (sign + left.ToString());
+            return (sign + string.Format("({0})", left.ToString()));
+        }
+
+        public override List<Expression> Descendants
+        {
+            get { return new List<Expression> { left }; }
+        }
+
+        public override Expression Copy()
+        {
+            UnaryOperator uo = new UnaryOperator(action, sign, associativity, precendence);
+            uo.left = left.Copy();
+            return uo;
         }
     }
 }

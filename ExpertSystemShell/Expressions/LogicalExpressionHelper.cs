@@ -23,6 +23,26 @@ namespace ExpertSystemShell.Expressions
         }
 
         /// <summary>
+        /// По выражению получает новое выражение, эквивалентное исходному, в ДНФ.
+        /// </summary>
+        /// <param name="expression">Исходное выражение.</param>
+        /// <returns>Возвращает ДНФ для заданного выражения.</returns>
+        public Expression GetDNF(Expression expression)
+        {
+            Expression e = expression.Copy();
+            return GetDNFRec(NotToAtomary(e));
+        }
+        /// <summary>
+        /// "Спускает" логическое НЕ до уровня литералов.
+        /// </summary>
+        /// <param name="expression">Исходное выражение.</param>
+        /// <returns>Возвращает выражение, в котором логическое НЕ стоит толькое перед литералами.</returns>
+        public Expression NotToAtomary(Expression expression)
+        {
+            return (NotToAtomaryRec(expression.Copy()));
+        }
+
+        /// <summary>
         /// Создаёт множество используемых меток.
         /// </summary>
         protected override void CreateLabels()
@@ -117,6 +137,166 @@ namespace ExpertSystemShell.Expressions
                 expression = item.Key.Replace(expression, item.Value);
             }
             return Tokenize(ProductionExprGrammar.Expression.Parse(expression)[0]);
+        }
+
+        /// <summary>
+        /// Рекурсивная процедура "спуска" логического НЕ до уровня литералов.
+        /// </summary>
+        /// <param name="expression">Исходное выражение.</param>
+        /// <returns>Возвращает выражение, в котором логическое НЕ стоит толькое перед литералами.</returns>
+        private Expression NotToAtomaryRec(Expression expression)
+        {
+            UnaryOperator uo = expression as UnaryOperator;
+            if (uo != null)
+            {
+                if (uo.Sign == "!")
+                {
+                    if (IsAtomic(uo))
+                        return NotToAtomary(Reverse(uo.Left));
+                }
+                uo.Left = NotToAtomary(uo.Left);
+                return uo;
+            }
+            else
+            {
+                BinaryOperator bo = expression as BinaryOperator;
+                if (bo != null)
+                {
+                    bo.Right = NotToAtomaryRec(bo.Right);
+                    bo.Left = NotToAtomaryRec(bo.Left);
+                    return bo;
+                }
+            }
+            return expression;
+        }
+        /// <summary>
+        /// Применяет логическое НЕ к заданному выражению.
+        /// </summary>
+        /// <param name="expression">Исходное выражение.</param>
+        /// <returns>Возвращает НЕ(выражение).</returns>
+        private Expression Reverse(Expression expression)
+        {
+            BinaryOperator bo = expression as BinaryOperator;
+            if (bo != null)
+            {
+                switch (bo.Sign)
+                {
+                    case ("&"):
+                        {
+                            bo.Sign = "|";
+                            bo.Action = binaryOperators["|"].Action;
+                            bo.Left = Reverse(bo.Left);
+                            bo.Right = Reverse(bo.Right);
+                            break;
+                        }
+                    case ("|"):
+                        {
+                            bo.Sign = "&";
+                            bo.Action = binaryOperators["&"].Action;
+                            bo.Left = Reverse(bo.Left);
+                            bo.Right = Reverse(bo.Right);
+                            break;
+                        }
+                    case ("-"):
+                        {
+                            UnaryOperator uo = (UnaryOperator)unaryOperators["!"];
+                            uo.Left = bo;
+                            return uo;
+                        }
+                }
+                return bo;
+            }
+            else
+            {
+                UnaryOperator uo = expression as UnaryOperator;
+                if (uo.Sign == "!")
+                {
+                    return uo.Left;
+                }
+            }
+            return expression;
+        }
+        /// <summary>
+        /// проверяет, является ли заданное выражение атомарным (константа, переменная, оператор "-").
+        /// </summary>
+        /// <param name="exp">Выражение.</param>
+        /// <returns>Возвращает <c>true</c>, если заданное выражение является атомарным.</returns>
+        private bool IsAtomic(Expression exp)
+        {
+            UnaryOperator uo = exp as UnaryOperator;
+            if (uo != null)
+            {
+                return uo.Left is UnaryOperator ||
+                        (uo.Left as BinaryOperator != null && ((BinaryOperator)uo.Left).Sign != "-");
+            }
+
+            return exp is Constant || exp is Variable;
+        }
+        /// <summary>
+        /// Рекурсивная процедура составления ДНФ.
+        /// </summary>
+        /// <param name="expression">Выражение.</param>
+        /// <returns>Возвращает ДНФ для заданного выражения.</returns>
+        private Expression GetDNFRec(Expression expression)
+        {
+            BinaryOperator bo = expression as BinaryOperator;
+            if (bo != null)
+            {
+                if (bo.Sign == "&")
+                {
+                    if (!IsDNFAnd(bo))
+                    {
+                        UnaryOperator notAnd = (UnaryOperator)unaryOperators["!"].Clone();
+                        notAnd.Left = bo;
+                        return GetDNFRec(NotToAtomary(notAnd));
+                    }
+                }
+                else
+                {
+                    bo.Right = GetDNFRec(bo.Right);
+                    bo.Left = GetDNFRec(bo.Left);
+                }
+            }
+            else
+            {
+                UnaryOperator uo = expression as UnaryOperator;
+                if (uo != null)
+                {
+                    uo.Left = GetDNFRec(uo.Left);
+                }
+            }
+            return expression;
+        }
+        /// <summary>
+        /// Проверяет, является ли заданная конъюнкция элементарной.
+        /// </summary>
+        /// <param name="bo">Конъюнкция.</param>
+        /// <returns>Возвращает <c>true</c>, если заданная коъюнкция является элементарной.</returns>
+        private bool IsDNFAnd(BinaryOperator bo)
+        {
+            Stack<Expression> stack = new Stack<Expression>();
+            stack.Push(bo.Left);
+            stack.Push(bo.Right);
+            while (stack.Count > 0)
+            {
+                Expression currExp = stack.Pop();
+                BinaryOperator sbo = currExp as BinaryOperator;
+                if (sbo != null)
+                {
+                    if (sbo.Sign == "|") return false;
+                    stack.Push(sbo.Left);
+                    stack.Push(sbo.Right);
+                }
+                else
+                {
+                    UnaryOperator uo = currExp as UnaryOperator;
+                    if (uo != null && uo.Sign == "!")
+                    {
+                        if (!IsAtomic(uo.Left)) return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }

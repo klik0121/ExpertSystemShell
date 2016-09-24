@@ -32,6 +32,11 @@ namespace ExpertSystemShell.Expressions
             get { return right; }
             set { right = value; }
         }
+        public Func<dynamic, dynamic, dynamic> Action
+        {
+            get { return action; }
+            set { action = value; }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BinaryOperator"/> class.
@@ -129,9 +134,9 @@ namespace ExpertSystemShell.Expressions
         /// </returns>
         public override object Clone()
         {
-            return new BinaryOperator(action, sign, associativity, precendence);
+            BinaryOperator o = new BinaryOperator(action, sign, associativity, precendence);
+            return o;
         }
-
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
@@ -141,6 +146,25 @@ namespace ExpertSystemShell.Expressions
         public override string ToString()
         {
             return left.ToString() + " " + sign + " " + right.ToString();
+        }
+
+        public override List<Expression> Descendants
+        {
+            get { return new List<Expression>() { left, right }; }
+        }
+
+        /// <summary>
+        /// Создаёт полную копию текущего выражения.
+        /// </summary>
+        /// <returns>
+        /// Возвращает полную копию текущего выражения.
+        /// </returns>
+        public override Expression Copy()
+        {
+            BinaryOperator o = new BinaryOperator(action, sign, associativity, precendence);
+            o.left = left.Copy();
+            o.right = right.Copy();
+            return o;
         }
     }
 }

@@ -121,5 +121,21 @@ namespace ExpertSystemShell.Expressions
         {
             return name;
         }
+
+        public override List<Expression> Descendants
+        {
+            get { return new List<Expression>(); }
+        }
+
+        /// <summary>
+        /// Создаёт полную копию текущего выражения.
+        /// </summary>
+        /// <returns>
+        /// Возвращает полную копию текущего выражения.
+        /// </returns>
+        public override Expression Copy()
+        {
+            return new Variable(name, value);
+        }
     }
 }

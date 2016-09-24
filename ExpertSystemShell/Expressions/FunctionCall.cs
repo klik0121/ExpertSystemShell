@@ -188,5 +188,26 @@ namespace ExpertSystemShell.Expressions
             }
             return result;
         }
+
+        public override List<Expression> Descendants
+        {
+            get 
+            {
+                return args.ToList();
+            }
+        }
+
+        /// <summary>
+        /// Создаёт полную копию текущего выражения.
+        /// </summary>
+        /// <returns>
+        /// Возвращает полную копию текущего выражения.
+        /// </returns>
+        public override Expression Copy()
+        {
+            FunctionCall call = new FunctionCall(action, name, argsCount);
+            call.args = (Expression[])this.args.Clone();
+            return call;
+        }
     }
 }

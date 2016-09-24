@@ -46,6 +46,7 @@ namespace ExpertSystemShell.Expressions
         public string Sign
         {
             get { return sign; }
+            set { sign = value; }
         }
         /// <summary>
         /// Количество параметров.
