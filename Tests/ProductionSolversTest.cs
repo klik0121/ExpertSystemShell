@@ -23,21 +23,33 @@ namespace Tests
         [TestMethod]
         public void TestDirectSolver()
         {
-            string query = "если 'валютный курс доллара - падает' то уровень цен на бирже=?";
-            ILogicalResult result = expert.GetResult(query);
-            Assert.IsTrue(result is ResultingFactSet);
-            Assert.IsTrue(result.ToString() == "'уровень цен на бирже - падает'");
-        }
-        [TestInitialize]
-        public void Initialize()
-        {
             IKnowledgeBase knBase = new ProdRuleKnBase(new PrMInMemoryStService());
             ILogicalSolver solver = new DirectProductionSolver(knBase);
             LogicalExpressionHelper eh = new LogicalExpressionHelper();
             IParser parser = new PrModelParser(eh);
             expert = new ExpertSystemBase(knBase, solver, parser);
-            string rules = File.ReadAllText("base.txt");
+            string rules = Properties.Resources.knowledgeBase;
             expert.AddRules(rules);
+            string query = "если 'валютный курс доллара - падает' то уровень цен на бирже=?";
+            ILogicalResult result = expert.GetResult(query);
+            Assert.IsTrue(result is ResultingFactSet);
+            Assert.IsTrue(result.ToString() == "'уровень цен на бирже - падает'");
+        }
+
+        [TestMethod]
+        public void TestReverseSolver()
+        {
+            IKnowledgeBase knBase = new ProdRuleKnBase(new PrMInMemoryStService());
+            ILogicalSolver solver = new ReverseProductionSolver(knBase);
+            LogicalExpressionHelper eh = new LogicalExpressionHelper();
+            IParser parser = new PrModelParser(eh);
+            expert = new ExpertSystemBase(knBase, solver, parser);
+            string rules = Properties.Resources.knowledgeBase;
+            expert.AddRules(rules);
+            string query = "если 'валютный курс доллара - падает' то уровень цен на бирже=?";
+            ILogicalResult result = expert.GetResult(query);
+            Assert.IsTrue(result is ResultingFactSet);
+            Assert.IsTrue(result.ToString() == "'уровень цен на бирже - падает'");
         }
     }
 }
