@@ -69,22 +69,32 @@ namespace ExpertSystemShell.KnowledgeBases
         /// </summary>
         public abstract void RemoveConflicts();
 
-        #endregion
-
-        #region IKnowledgeBase Members
-
-
         /// <summary>
         /// Добавляет элементарные знания в рабочую память.
         /// </summary>
         /// <param name="data"></param>
         public void AddData(IData data)
         {
-            if (!workMemory.Contains(data))
+            for (int i = 0; i < workMemory.Count; i++)
             {
-                workMemory.Add(data);
-                stateChanged = true;
+                //если факт найден в рабочей памяти
+                if(workMemory[i].Name == data.Name)
+                {
+                    //если значения различны
+                    if (workMemory[i].Value != data.Value)
+                    {
+                        //меняем состояние рабочей памяти
+                        stateChanged = true;
+                        workMemory[i].Value = data.Value;
+                    }
+                    //если 
+                    return;
+                }
             }
+            //факт не найден в рабчоей памяти
+            workMemory.Add(data);
+            stateChanged = true;
+
         }
         /// <summary>
         /// Очищает рябочую память.

@@ -67,6 +67,7 @@
     <Compile Include="KnowledgeBases\ProductionModel\AddFactAction.cs" />
     <Compile Include="KnowledgeBases\IKnowledgeBaseAction.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProductionFact.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\ProductionModelExtensions.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProductionRule.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProdRuleKnBase.cs" />
     <Compile Include="KnowledgeBases\StorageServices\PrMInMemoryStService.cs" />
@@ -88,12 +89,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solvers\ILogicalSolver.cs" />
     <Compile Include="Solvers\IProductionSolver.cs" />
+    <Compile Include="Solvers\ProductionModel\AbstractProdctuonSolver.cs" />
     <Compile Include="Solvers\ProductionModel\DirectProductionSolver.cs" />
     <Compile Include="Solvers\ProductionModel\ProductionFactQuery.cs" />
     <Compile Include="Solvers\ProductionModel\ResultingFactSet.cs" />
+    <Compile Include="Solvers\ProductionModel\ReverseProductionSolver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="base.txt" />
     <Content Include="Parsers\Grammars\GrammarsNamespace.txt" />
   </ItemGroup>
   <ItemGroup>

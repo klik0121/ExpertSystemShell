@@ -9,56 +9,54 @@ using ExpertSystemShell.KnowledgeBases.ProductionModel;
 
 namespace ExpertSystemShell.Solvers.ProductionModel
 {
-    public class DirectProductionSolver: IProductionSolver
+    /// <summary>
+    /// Механизм прямого вывода в продукционной модели.
+    /// </summary>
+    /// <seealso cref="ExpertSystemShell.Solvers.ProductionModel.AbstractProductionSolver" />
+    public class DirectProductionSolver: AbstractProductionSolver
     {
-        protected IKnowledgeBase knBase;
-        protected ILogicalQuery cachedQuery;
-        protected List<ILogicalResult> cachedResult;
-
-        public DirectProductionSolver(IKnowledgeBase knBase)
+        /// <summary>
+        /// Инициализирует новый экземпляр <see cref="DirectProductionSolver"/>.
+        /// </summary>
+        /// <param name="knBase">База знаний.</param>
+        public DirectProductionSolver(IKnowledgeBase knBase): base(knBase)
         {
-            this.knBase = knBase;
-            cachedResult = new List<ILogicalResult>();
         }
 
-        #region IProductionSolver Members
-
         /// <summary>
-        /// Выбирает одно правило из оставшихся равноправных правил, используя какую-нибудь
-        /// эвристику.
+        /// Добавляет новые правила к списку уже готовых к выполнению.
         /// </summary>
-        /// <param name="statements">The statements.</param>
-        /// <returns></returns>
-        public KnowledgeBases.ILogicalStatement ChooseOne(ICollection<KnowledgeBases.ILogicalStatement> statements)
-        {           
-            ILogicalStatement result = statements.Last();
-            statements.Remove(result);
-            return result;
+        /// <param name="ready">Список готовых правил.</param>
+        protected void AddRecentRules(List<ILogicalStatement> ready)
+        {
+            if (knBase.StateChanged)
+            {
+                foreach (ILogicalStatement statement in knBase)
+                {
+                    if (!ready.Contains(statement) && knBase.CheckStatement(statement))
+                        ready.Add(statement);
+                }
+            }
         }
-
-        #endregion
-
-        #region ILogicalSolver Members
-
         /// <summary>
-        /// Получает ответ на запроса пользователя.
+        /// Получает ответ на логический запрос.
         /// </summary>
-        /// <param name="query">Запрос к базе знаний..</param>
+        /// <param name="query">Логический запрос.</param>
         /// <returns>
-        /// Возвращает ответ на запрос пользователя.
+        /// Возвращает результат логического запроса.
         /// </returns>
-        public ILogicalResult GetResult(ILogicalQuery query)
+        protected override ILogicalResult Solve(ILogicalQuery query)
         {
             knBase.ClearWorkMemory();
             this.cachedQuery = query;
             cachedResult.Clear();
             IEnumerable<IKnowledgeBaseAction> init = query.GetPreQueryActions();
-            foreach(var item in init)
+            foreach (var item in init)
                 item.Execute(knBase);
             List<IData> queriedData = query.GetQueriedItems().ToList();
             List<ILogicalStatement> ready = new List<ILogicalStatement>();
             AddRecentRules(ready);
-            while (ready.Count > 0 && queriedData.Count((a) => { return a.Value == null; }) > 0) 
+            while (ready.Count > 0 && queriedData.Count((a) => { return a.Value == null; }) > 0)
             {
                 ILogicalStatement st = ChooseOne(ready);
                 st.Execute(knBase);
@@ -77,34 +75,6 @@ namespace ExpertSystemShell.Solvers.ProductionModel
             ILogicalResult result = new ResultingFactSet(queriedData);
             cachedResult.Add(result);
             return result;
-        }
-
-        /// <summary>
-        /// Получает полный вывод в ответ на запрос пользователя.
-        /// </summary>
-        /// <param name="query">Запрос к логической базе знаний.</param>
-        /// <returns>
-        /// Возвращает полный вывод в ответ на запрос пользователя.
-        /// </returns>
-        public IEnumerable<ILogicalResult> GetConclusion(ILogicalQuery query)
-        {
-            if (query.Equals(cachedQuery)) return cachedResult;
-            GetResult(query);
-            return cachedResult;
-        }
-
-        #endregion
-
-        protected void AddRecentRules(List<ILogicalStatement> ready)
-        {
-            if (knBase.StateChanged)
-            {
-                foreach (ILogicalStatement statement in knBase)
-                {
-                    if (!ready.Contains(statement) && knBase.CheckStatement(statement))
-                        ready.Add(statement);
-                }
-            }
         }
     }
 }
