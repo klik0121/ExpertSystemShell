@@ -42,15 +42,26 @@ namespace ExpertSystemShell.Builders
         public ILogicalQuery Build(Diggins.Jigsaw.Node node)
         {
             Node actionList = node[ProductionActionGrammar.ProductionActionList.Name];
-            IEnumerable<Node> facts = from n in node.Nodes
-                                      where n.Label == ProductionQueryGrammar.FactName.Name
-                                      select n;
             List<IKnowledgeBaseAction> actions = new List<IKnowledgeBaseAction>();
-            foreach(var n in actionList.Nodes)
-                actions.Add(actionBuilders[n.Label].Build(n));
             List<ProductionFact> queriedFacts = new List<ProductionFact>();
-            foreach (var n in facts)
-                queriedFacts.Add(new ProductionFact(n.Text, null));
+            foreach(var n in node.Nodes)
+            {
+                if(n.Label == ProductionActionGrammar.ProductionActionList.Name)
+                {
+                    foreach(var action in n.Nodes)
+                    {
+                        actions.Add(actionBuilders[action.Label].Build(action));
+                    }
+                }
+                else if(n.Label == ProductionQueryGrammar.FactName.Name)
+                {
+                    queriedFacts.Add(new ProductionFact(n.Text, null));
+                }
+                else if(n.Label == ProductionQueryGrammar.Property.Name)
+                {
+                    queriedFacts[queriedFacts.Count - 1].Value = n.Text;
+                }
+            }
             return new ProductionFactQuery(actions, queriedFacts);
         }
 

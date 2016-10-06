@@ -63,7 +63,7 @@ namespace Tests
         [TestMethod]
         public void TestFactQuery()
         {
-            string query = "если 'погода - ветренно', 'дождь - да' то взять зонт=? одеться теплее=?";
+            string query = "если 'погода - ветренно', 'дождь - да' то 'взять зонт=?', 'одеться теплее=?'";
             Assert.IsTrue(ProductionQueryGrammar.Query.ExactMatch(query));
         }
     }

@@ -10,6 +10,7 @@ using ExpertSystemShell.KnowledgeBases;
 using ExpertSystemShell.Solvers;
 using System.Collections.Generic;
 using System.Linq;
+using ExpertSystemShell;
 
 namespace Tests
 {
@@ -55,13 +56,26 @@ namespace Tests
         [TestMethod]
         public void TestParsingQuery()
         {
-            string query = "если 'погода - ветренно', 'дождь - да' то взять зонт=? одеться теплее=?";
+            string query = "если 'погода - ветренно', 'дождь - да' то 'взять зонт=?', 'одеться теплее=?'";
             IParser parser = new PrModelParser(new LogicalExpressionHelper());
             ILogicalQuery q = parser.ParseQuery(query);
             Assert.IsTrue(q.GetQueriedItems().Count() == 2);
             Assert.IsTrue(q.GetPreQueryActions().Count() == 2);
             Assert.IsTrue(q.GetPreQueryActions().All((a) => { return a is AddFactAction; }));
             Assert.IsTrue(q.GetQueriedItems().All((a) => { return a is ProductionFact; }));
+        }
+        [TestMethod]
+        public void TestParsingQueryWithProperty()
+        {
+            string query = "если 'погода - ветренно', 'дождь - да' то 'взять зонт=?обязательно', 'одеться теплее=?обязательно'";
+            Assert.IsTrue(ProductionQueryGrammar.Query.ExactMatch(query));
+            IParser parser = new PrModelParser(new LogicalExpressionHelper());
+            ILogicalQuery q = parser.ParseQuery(query);
+            Assert.IsTrue(q.GetQueriedItems().Count() == 2);
+            Assert.IsTrue(q.GetPreQueryActions().Count() == 2);
+            Assert.IsTrue(q.GetPreQueryActions().All((a) => { return a is AddFactAction; }));
+            Assert.IsTrue(q.GetQueriedItems().All((a) => { return a is ProductionFact; }));
+            Assert.IsTrue(q.GetQueriedItems().All(a => { return a.Value == "обязательно"; }));
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Tests
             expert = new ExpertSystemBase(knBase, solver, parser);
             string rules = Properties.Resources.knowledgeBase;
             expert.AddRules(rules);
-            string query = "если 'валютный курс доллара - падает' то уровень цен на бирже=?";
+            string query = "если 'валютный курс доллара - падает' то 'уровень цен на бирже=?'";
             ILogicalResult result = expert.GetResult(query);
             Assert.IsTrue(result is ResultingFactSet);
             Assert.IsTrue(result.ToString() == "'уровень цен на бирже - падает'");
@@ -46,7 +46,7 @@ namespace Tests
             expert = new ExpertSystemBase(knBase, solver, parser);
             string rules = Properties.Resources.knowledgeBase;
             expert.AddRules(rules);
-            string query = "если 'валютный курс доллара - падает' то уровень цен на бирже=?";
+            string query = "если 'валютный курс доллара - падает' то 'уровень цен на бирже=?'";
             ILogicalResult result = expert.GetResult(query);
             Assert.IsTrue(result is ResultingFactSet);
             Assert.IsTrue(result.ToString() == "'уровень цен на бирже - падает'");
