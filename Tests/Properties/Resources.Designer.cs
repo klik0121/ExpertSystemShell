@@ -72,5 +72,17 @@ namespace Tests.Properties {
                 return ResourceManager.GetString("knowledgeBase", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to если &apos;x-1&apos; и &apos;y-1&apos; | &apos;z-1&apos; то &apos;x-1&apos;;
+        ///если &apos;x-1&apos; &amp; &apos;y-1&apos; | &apos;y-6&apos; то &apos;y-1&apos;;
+        ///если &apos;y-1&apos; &amp; &apos;a-5&apos; | &apos;z-1&apos; то &apos;a-5&apos;;
+        ///если &apos;x-1&apos; &amp; &apos;y-1&apos; | &apos;a-5&apos; то &apos;x-1&apos;, &apos;y-1&apos;;.
+        /// </summary>
+        internal static string sampleBase {
+            get {
+                return ResourceManager.GetString("sampleBase", resourceCulture);
+            }
+        }
     }
 }

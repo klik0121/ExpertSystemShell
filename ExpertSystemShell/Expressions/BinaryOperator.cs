@@ -166,5 +166,23 @@ namespace ExpertSystemShell.Expressions
             o.right = right.Copy();
             return o;
         }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            BinaryOperator bo = obj as BinaryOperator;
+            if(bo != null)
+            {
+                return (this.sign == bo.sign) && (this.left.Equals(bo.left) && this.right.Equals(bo.right))
+                    || (this.left.Equals(bo.right) && this.right.Equals(bo.left));
+            }
+            return false;
+        }
     }
 }

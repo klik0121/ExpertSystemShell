@@ -11,10 +11,26 @@ namespace ExpertSystemShell.KnowledgeBases
     /// </summary>
     public interface IKnowledgeBase: IEnumerable<ILogicalStatement>
     {
+        /// <summary>
+        /// Получает текущее содержимое рабочей памяти.
+        /// </summary>
         IEnumerable<IData> CurrentData
         {
             get;
         }
+        /// <summary>
+        /// получает активное множество правил.
+        /// </summary>
+        IEnumerable<ILogicalStatement> ActiveSet
+        {
+            get;
+        }
+        /// <summary>
+        /// Возвращает состояние базы.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> если база изменилась; иначе, <c>false</c>.
+        /// </value>
         bool StateChanged
         {
             get;
@@ -48,6 +64,17 @@ namespace ExpertSystemShell.KnowledgeBases
         /// </summary>
         /// <param name="IData">Элементарные знания.</param>
         void AddData(IData data);
+        /// <summary>
+        /// Заменяет значение данных на новое значение.
+        /// </summary>
+        /// <param name="oldValue">Старое значение.</param>
+        /// <param name="newValue">новое значение.</param>
+        void ChangeData(IData oldValue, IData newValue);
+        /// <summary>
+        /// Удаляет данные из рабочей памяти.
+        /// </summary>
+        /// <param name="data">данные.</param>
+        void DeleteData(IData data);
         /// <summary>
         /// Очищает рябочую память.
         /// </summary>

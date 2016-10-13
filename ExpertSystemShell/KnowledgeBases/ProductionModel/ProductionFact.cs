@@ -61,7 +61,12 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         }
         public override bool Equals(object obj)
         {
-            return (obj is ProductionFact && this.GetHashCode() == obj.GetHashCode());
+            ProductionFact fact = obj as ProductionFact;
+            if(fact != null)
+            {
+                return fact.name == this.name && fact.value == this.value;
+            }
+            return false;
         }
     }
 }

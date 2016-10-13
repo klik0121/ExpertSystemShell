@@ -94,5 +94,36 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
             }
             return null;
         }
+
+        public static bool SplitFactConjunction(this Expression expression,
+            out IEnumerable<Expression> facts)
+        {
+            List<Expression> result = new List<Expression>();
+            facts = new List<Expression>();
+            Stack<Expression> stack = new Stack<Expression>();
+            stack.Push(expression);
+            while(stack.Count > 0)
+            {
+                Expression currExpression = stack.Pop();
+                if(currExpression.IsFact())
+                {
+                    if (!facts.Contains(currExpression))
+                        result.Add(currExpression.Copy());
+                }
+                else
+                {
+                    Expression left = null;
+                    Expression right = null;
+                    if(currExpression.SplitAnd(out left, out right))
+                    {
+                        stack.Push(left);
+                        stack.Push(right);
+                    }
+                    else return false;
+                }                
+            }
+            facts = result;
+            return true;
+        }
     }
 }

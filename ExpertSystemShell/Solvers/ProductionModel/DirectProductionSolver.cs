@@ -22,22 +22,6 @@ namespace ExpertSystemShell.Solvers.ProductionModel
         public DirectProductionSolver(IKnowledgeBase knBase): base(knBase)
         {
         }
-
-        /// <summary>
-        /// Добавляет новые правила к списку уже готовых к выполнению.
-        /// </summary>
-        /// <param name="ready">Список готовых правил.</param>
-        protected void AddRecentRules(List<ILogicalStatement> ready)
-        {
-            if (knBase.StateChanged)
-            {
-                foreach (ILogicalStatement statement in knBase)
-                {
-                    if (!ready.Contains(statement) && knBase.CheckStatement(statement))
-                        ready.Add(statement);
-                }
-            }
-        }
         /// <summary>
         /// Получает ответ на логический запрос.
         /// </summary>
@@ -55,12 +39,15 @@ namespace ExpertSystemShell.Solvers.ProductionModel
                 item.Execute(knBase);
             List<IData> queriedData = query.GetQueriedItems().ToList();
             List<ILogicalStatement> ready = new List<ILogicalStatement>();
-            AddRecentRules(ready);
+            ready = knBase.ActiveSet.ToList();
             while (ready.Count > 0 && queriedData.Count((a) => { return a.Value == null; }) > 0)
             {
                 ILogicalStatement st = ChooseOne(ready);
                 st.Execute(knBase);
-                AddRecentRules(ready);
+                if(knBase.StateChanged)
+                {
+                    ready = knBase.ActiveSet.ToList();
+                }
                 foreach (IData data in knBase.CurrentData)
                 {
                     foreach (IData qData in queriedData)

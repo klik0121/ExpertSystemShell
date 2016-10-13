@@ -12,7 +12,22 @@ namespace ExpertSystemShell.KnowledgeBases
     /// </summary>
     public interface ILogicalStatement
     {
-        //пока не понятно, что включать в интерфейс
+        /// <summary>
+        /// Получает или задёт имя текущего утверждения.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        string Name
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Выполняет текущее утверждение в заданной базе знаний.
+        /// </summary>
+        /// <param name="knBase"База знаний.</param>
         void Execute(IKnowledgeBase knBase);
     }
 }

@@ -4,3 +4,5 @@ c:\users\klik0121\documents\visual studio 2013\Projects\ExpertSystemShell\Expert
 c:\users\klik0121\documents\visual studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\obj\Debug\ExpertSystemShell.dll
 c:\users\klik0121\documents\visual studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\obj\Debug\ExpertSystemShell.pdb
 C:\Users\klik0121\documents\visual studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\bin\Debug\Jigsaw.dll
+C:\Users\klik0121\documents\visual studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\bin\Debug\ExpertSystemShell.dll.CodeAnalysisLog.xml
+C:\Users\klik0121\documents\visual studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\bin\Debug\ExpertSystemShell.dll.lastcodeanalysissucceeded

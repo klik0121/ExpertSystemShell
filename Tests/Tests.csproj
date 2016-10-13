@@ -67,6 +67,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ResolutionMethodTest.cs" />
+    <Compile Include="ReteTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExpertSystemShell\ExpertSystemShell.csproj">
@@ -85,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\knowledgeBase.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sampleBase.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

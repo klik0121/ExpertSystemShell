@@ -139,11 +139,34 @@ namespace ExpertSystemShell.Expressions
             get { return new List<Expression> { left }; }
         }
 
+        /// <summary>
+        /// Создаёт полную копию текущего выражения.
+        /// </summary>
+        /// <returns>
+        /// Возвращает полную копию текущего выражения.
+        /// </returns>
         public override Expression Copy()
         {
             UnaryOperator uo = new UnaryOperator(action, sign, associativity, precendence);
             uo.left = left.Copy();
             return uo;
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            UnaryOperator uo = obj as UnaryOperator;
+            if(uo != null)
+            {
+                return uo.sign == this.sign && uo.left.Equals(this.left);
+            }
+            return false;
         }
     }
 }

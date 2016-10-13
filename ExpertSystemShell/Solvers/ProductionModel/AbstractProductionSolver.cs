@@ -45,7 +45,7 @@ namespace ExpertSystemShell.Solvers.ProductionModel
         /// <returns></returns>
         public ILogicalStatement ChooseOne(ICollection<ILogicalStatement> statements)
         {
-            ILogicalStatement result = statements.Last();
+            ILogicalStatement result = statements.First();
             statements.Remove(result);
             return result;
         }

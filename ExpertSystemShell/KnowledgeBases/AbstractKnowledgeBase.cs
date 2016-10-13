@@ -15,26 +15,24 @@ namespace ExpertSystemShell.KnowledgeBases
     {
         protected IStorageService stService;
         protected KnowledgeBaseType type; //???
-        protected List<IData> workMemory;
         protected bool stateChanged;
 
-        public IEnumerable<IData> CurrentData
+        public abstract IEnumerable<IData> CurrentData
         {
-            get 
-            {
-                stateChanged = false;
-                return workMemory;
-            }
+            get;
         }
         public bool StateChanged
         {
             get { return stateChanged; }
         }
+        public abstract IEnumerable<ILogicalStatement> ActiveSet
+        {
+            get;
+        }
 
         public AbstractKnowledgeBase(IStorageService stService)
         {
             this.stService = stService;
-            this.workMemory = new List<IData>();
         }
 
         #region IKnowledgeBase Members
@@ -73,37 +71,11 @@ namespace ExpertSystemShell.KnowledgeBases
         /// Добавляет элементарные знания в рабочую память.
         /// </summary>
         /// <param name="data"></param>
-        public void AddData(IData data)
-        {
-            for (int i = 0; i < workMemory.Count; i++)
-            {
-                //если факт найден в рабочей памяти
-                if(workMemory[i].Name == data.Name)
-                {
-                    //если значения различны
-                    if (workMemory[i].Value != data.Value)
-                    {
-                        //меняем состояние рабочей памяти
-                        stateChanged = true;
-                        workMemory[i].Value = data.Value;
-                    }
-                    //если 
-                    return;
-                }
-            }
-            //факт не найден в рабчоей памяти
-            workMemory.Add(data);
-            stateChanged = true;
-
-        }
+        public abstract void AddData(IData data);
         /// <summary>
         /// Очищает рябочую память.
         /// </summary>
-        public void ClearWorkMemory()
-        {
-            stateChanged = true;
-            workMemory.Clear();
-        }
+        public abstract void ClearWorkMemory();
         /// <summary>
         /// Проверяет истинность логического высказывания.
         /// </summary>
@@ -112,6 +84,17 @@ namespace ExpertSystemShell.KnowledgeBases
         /// Возвращает <c>true</c>, если правило можно выполнить.
         /// </returns>
         public abstract bool CheckStatement(ILogicalStatement statement);
+        /// <summary>
+        /// Заменяет значение данных на новое значение.
+        /// </summary>
+        /// <param name="oldValue">Старое значение.</param>
+        /// <param name="newValue">новое значение.</param>
+        public abstract void ChangeData(IData oldValue, IData newValue);
+        /// <summary>
+        /// Удаляет данные из рабочей памяти.
+        /// </summary>
+        /// <param name="data">данные.</param>
+        public abstract void DeleteData(IData data);
 
         #endregion
 
@@ -138,6 +121,5 @@ namespace ExpertSystemShell.KnowledgeBases
         }
 
         #endregion
-
     }
 }
