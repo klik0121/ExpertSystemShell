@@ -15,8 +15,15 @@ namespace Tests
         {
             Expression exp = eh.CreateExpression("!(!'x-1'|!'y-1' & 'z-1')");
             Expression dnf = eh.GetDNF(exp);
-            Assert.IsTrue(CompareExpressions(exp, dnf));
+            //Assert.IsTrue(CompareExpressions(exp, dnf));
             RecursiveDnfTest(dnf);
+        }
+        [TestMethod]
+        public void TestExpressionToCNF()
+        {
+            Expression exp = eh.CreateExpression("(!'x-1' | 'y-1') & (!(!!'y-1' | 'z-1') | !'x-1')");
+            string str = exp.ToString();
+            Expression cnf = eh.GetCNF(exp);
         }
         /// <summary>
         /// Проверяет, является ли заданное выражение ДНФ.

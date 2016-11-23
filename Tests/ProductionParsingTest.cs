@@ -35,8 +35,6 @@ namespace Tests
             IBuilder<ILogicalStatement> builder = new ProductionRuleBuilder(eh);
             ProductionRule r = (ProductionRule)builder.Build(
                 ProductionRuleGrammar.ProductionRule.Parse(rule)[0]);
-            Assert.IsTrue(r.Condition != null &&
-                r.Condition.ToString() == "холодно - да & влажность - высокая");
             Assert.IsTrue(r.Actions.Count() == 2);
         }
         [TestMethod]
