@@ -145,7 +145,22 @@ namespace ExpertSystemShell.Expressions
         /// </returns>
         public override string ToString()
         {
-            return left.ToString() + " " + sign + " " + right.ToString();
+            string result = string.Empty;
+            BinaryOperator leftBo = left as BinaryOperator;
+            if (leftBo != null && leftBo.precendence < this.precendence || 
+                left is UnaryOperator)
+            {
+                result = "(" + left.ToString() + ") ";
+            }
+            else result = left.ToString() + " ";
+            BinaryOperator rightBo = right as BinaryOperator;
+            if(rightBo != null && rightBo.precendence < this.precendence || 
+                left is UnaryOperator)
+            {
+                result += sign + " (" + right.ToString() + ") ";
+            }
+            else result += sign + " "+ right.ToString();
+            return result;
         }
 
         public override List<Expression> Descendants
@@ -179,8 +194,9 @@ namespace ExpertSystemShell.Expressions
             BinaryOperator bo = obj as BinaryOperator;
             if(bo != null)
             {
-                return (this.sign == bo.sign) && (this.left.Equals(bo.left) && this.right.Equals(bo.right))
-                    || (this.left.Equals(bo.right) && this.right.Equals(bo.left));
+                if(this.sign != bo.sign) return false;
+                if(this.left.Equals(bo.left) && this.right.Equals(bo.right)) return true;
+                if(this.left.Equals(bo.right) && this.right.Equals(bo.left)) return true;
             }
             return false;
         }
