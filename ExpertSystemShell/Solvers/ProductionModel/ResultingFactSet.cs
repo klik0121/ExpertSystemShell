@@ -7,7 +7,7 @@ using ExpertSystemShell.KnowledgeBases;
 
 namespace ExpertSystemShell.Solvers.ProductionModel
 {
-    public class ResultingFactSet: ILogicalResult
+    public class ResultingFactSet: ILogicalResult, IEnumerable<IData>
     {
         protected IEnumerable<IData> result;
 
@@ -31,5 +31,23 @@ namespace ExpertSystemShell.Solvers.ProductionModel
             }
             return res.Substring(0, res.Length - 2);
         }
+
+        #region IEnumerable<IData> Members
+
+        public IEnumerator<IData> GetEnumerator()
+        {
+            return result.GetEnumerator();
+        }
+
+        #endregion
+
+        #region IEnumerable Members
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        #endregion
     }
 }
