@@ -104,12 +104,12 @@
     <Compile Include="Solvers\ProductionModel\ReverseProductionSolver.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CodeProjectArticle.html" />
     <Content Include="Parsers\Grammars\GrammarsNamespace.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
