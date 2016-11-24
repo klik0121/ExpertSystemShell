@@ -23,7 +23,7 @@ namespace Tests
         [TestMethod]
         public void TestDirectSolver()
         {
-            IKnowledgeBase knBase = new ProdModelSimpleKnBase(new PrMInMemoryStService());
+            IKnowledgeBase knBase = new ProductionModelReteNetwork(new PrMInMemoryStService());
             ILogicalSolver solver = new DirectProductionSolver(knBase);
             LogicalExpressionHelper eh = new LogicalExpressionHelper();
             IParser parser = new PrModelParser(eh);

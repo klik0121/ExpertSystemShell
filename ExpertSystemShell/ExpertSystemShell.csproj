@@ -75,6 +75,7 @@
     <Compile Include="KnowledgeBases\ProductionModel\ProductionModelReteNetwork.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProductionRule.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProdModelSimpleKnBase.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\ResolutionMethod.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ReteNode.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\StartNode.cs" />
     <Compile Include="KnowledgeBases\StorageServices\PrMInMemoryStService.cs" />

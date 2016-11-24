@@ -85,11 +85,12 @@ namespace ExpertSystemShell.Expressions
         /// </summary>
         protected virtual void CreateBooleanOperators()
         {
-            binaryOperators.Add("&", new BinaryOperator((a, b) => { return ((bool)a) & ((bool)b); }, "&", Associativity.Left, 4));
+            binaryOperators.Add("&", new BinaryOperator((a, b) => { return ((bool)a) & ((bool)b); }, "&", Associativity.Left, 5));
             binaryOperators.Add("|", new BinaryOperator((a, b) => { return ((bool)a) | ((bool)b); }, "|", Associativity.Left, 4));
             binaryOperators.Add("!=", new BinaryOperator((a, b) => {return a!=b;}, "!=", Associativity.Left, 3));
             //dynamic objects does not support '!' operator
-            unaryOperators.Add("!", new UnaryOperator((a) => { if (a.Equals(true)) return false; else return true; }, "!", Associativity.Left, 5));
+            unaryOperators.Add("!", new UnaryOperator((a) => {if (a.Equals(true)) return false; else return true; },
+                "!", Associativity.Left, 6));
             binaryOperators.Add("==", new BinaryOperator((a, b) => { return a == b; }, "==", Associativity.Left, 3));
             binaryOperators.Add(">=", new BinaryOperator((a, b) => { return a >= b; }, ">=", Associativity.Left, 3));
             binaryOperators.Add("<=", new BinaryOperator((a, b) => { return a <= b; }, "<=", Associativity.Left, 3));

@@ -150,7 +150,7 @@ namespace ExpertSystemShell.Expressions
             Variable v = obj as Variable;
             if(v != null)
             {
-                return v.value.Equals(this.value) && v.name == this.name;
+                return v.name == this.name;
             }
             return false;
         }

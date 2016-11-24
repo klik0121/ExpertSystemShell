@@ -23,7 +23,6 @@ namespace ExpertSystemShell.KnowledgeBases
             get;
             set;
         }
-
         /// <summary>
         /// Выполняет текущее утверждение в заданной базе знаний.
         /// </summary>

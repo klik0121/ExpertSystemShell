@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ExpertSystemShell.Parsers.Grammars.ProductionModel;
 using System.Text.RegularExpressions;
+using ExpertSystemShell.KnowledgeBases.ProductionModel;
 
 namespace ExpertSystemShell.Expressions
 {
@@ -40,6 +41,218 @@ namespace ExpertSystemShell.Expressions
         public Expression NotToAtomary(Expression expression)
         {
             return (NotToAtomaryRec(expression.Copy()));
+        }
+
+        public Expression GetCNF(Expression expression)
+        {
+            Expression e = expression.Copy();
+            e = NotToAtomary(e);
+            return GetCNFRec(e);
+        }
+
+        private Expression GetCNFRec(Expression expression)
+        {
+            BinaryOperator bo = expression as BinaryOperator;
+            if(bo != null)
+            {
+                if(bo.Sign == "&")
+                {
+                    bo.Left = GetCNFRec(bo.Left);
+                    bo.Right = GetCNFRec(bo.Right);
+                }
+                else if(bo.Sign == "|")
+                {
+                    if(!IsCNFOr(bo)) //если дизъюнкция не является элементарной
+                    {
+                        return AbsorptionRule(bo);
+                    }
+                }
+            }
+            return bo;
+        }
+        private static List<Expression> GetDisjunctCollection(Expression expression)
+        {
+            BinaryOperator bo = expression as BinaryOperator;
+            if (bo != null && bo.Sign == "|")
+            {
+                List<Expression> disjunctCollection = new List<Expression>();
+                disjunctCollection.Add(bo.Left);
+                disjunctCollection.Add(bo.Right);
+                bool exists = true;
+                while (exists) //пока есть не атомарная дизюнкция
+                {
+                    exists = false;
+                    foreach (var item in disjunctCollection)
+                    {
+                        Expression left = null;
+                        Expression right = null;
+                        if (item.SplitOr(out left, out right))
+                        {
+                            disjunctCollection.Add(left);
+                            disjunctCollection.Add(right);
+                            exists = true;
+                        }
+                    }
+                }
+                return disjunctCollection;
+            }
+            return new List<Expression>();
+        }
+
+        private static List<Expression> GetConjunctCollection(Expression expression)
+        {
+            BinaryOperator bo = expression as BinaryOperator;
+            if (bo != null && bo.Sign == "&")
+            {
+                List<Expression> conjunctCollection = new List<Expression>();
+                conjunctCollection.Add(bo.Left);
+                conjunctCollection.Add(bo.Right);
+                bool exists = true;
+                while (exists) //пока есть не атомарная дизюнкция
+                {
+                    exists = false;
+                    for (int i = 0; i < conjunctCollection.Count; i++)
+                    {
+                        Expression left = null;
+                        Expression right = null;
+                        if (conjunctCollection[i].SplitAnd(out left, out right))
+                        {                            
+                            if (!conjunctCollection.Contains(left))
+                                conjunctCollection.Add(left);
+                            if (!conjunctCollection.Contains(right))
+                                conjunctCollection.Add(right);
+                            exists = true;
+                            conjunctCollection.RemoveAt(i);
+                            break;
+                        }
+                    }
+                }
+                return conjunctCollection;
+            }
+            return new List<Expression>();
+        }
+
+        private Expression AbsorptionRule(BinaryOperator expression)
+        {
+            List<Expression> disjunctCollection = GetDisjunctCollection(expression);
+            for(int i = 0; i < disjunctCollection.Count(); i++) //сначала (x | x) = x
+            {
+                for(int j = i + 1; j < disjunctCollection.Count(); j++)
+                {
+                    if(disjunctCollection[i].Equals(disjunctCollection[j]))
+                    {
+                        disjunctCollection.RemoveAt(j);
+                        j--;
+                    }
+                }
+            }
+            bool changed = true;
+            while(changed) //по закону поглощения
+            {
+                changed = false;
+                for(int i = 0; i < disjunctCollection.Count; i++)
+                {
+                    for(int j = 0; j < disjunctCollection.Count; j++)
+                    {
+                        if(i != j)
+                        {
+                            BinaryOperator bo = disjunctCollection[j] as BinaryOperator;
+                            if(bo != null)
+                            {
+                                List<Expression> conjunctCollection =
+                                    GetConjunctCollection(disjunctCollection[j]);
+                                // проверяем (a | (a & b)) = a
+                                if (conjunctCollection.Any((a)
+                                    => { return a.Equals(disjunctCollection[i]); })) 
+                                {
+                                    changed = true;
+                                    disjunctCollection.RemoveAt(j);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (changed) break;
+                }
+            }
+            //если остался неатомарный дизъюнкт
+            if (disjunctCollection.Any((a) =>
+                { return (a is BinaryOperator && !IsCNFOr((BinaryOperator)a)); }))
+                    return DistributionRule(disjunctCollection); 
+            return CreateDisjunction(disjunctCollection);          
+        }
+        private Expression DistributionRule(List<Expression> disjunctCollection)
+        {
+            Expression conj = null;
+            for (int i = 0; i < disjunctCollection.Count; i++)
+            {
+                if (disjunctCollection[i] is BinaryOperator &&
+                    (!IsCNFOr((BinaryOperator)disjunctCollection[i])))
+                {
+                    conj = disjunctCollection[i];
+                    disjunctCollection.RemoveAt(i);
+                    break;
+                }
+            }
+            if (conj != null)
+            {
+                return DistributionRule(conj, CreateDisjunction(disjunctCollection));
+            }
+            else return CreateDisjunction(disjunctCollection);
+        }
+
+        private Expression DistributionRule(Expression conj, Expression disj)
+        {
+            List<Expression> conjunctCollection = GetConjunctCollection(conj);
+            for(int i = 0; i < conjunctCollection.Count; i++)
+            {
+                BinaryOperator bo = (BinaryOperator)BinaryOperators["|"].Clone();
+                bo.Left = conjunctCollection[i];
+                bo.Right = disj;
+                conjunctCollection[i] = bo;
+            }
+            if (conjunctCollection.Count == 1)
+                return conjunctCollection[0];
+            else return GetCNFRec(CreateConjunction(conjunctCollection));
+        }
+
+        private Expression CreateConjunction(List<Expression> conjunctCollection)
+        {
+            if (conjunctCollection.Count() == 1) return conjunctCollection.First();
+            BinaryOperator result = (BinaryOperator)binaryOperators["&"].Clone();
+            BinaryOperator currOperator = result;
+            for (int i = 0; i < conjunctCollection.Count - 2; i++)
+            {
+                currOperator.Left = conjunctCollection[i];
+                currOperator.Right = (BinaryOperator)binaryOperators["&"].Clone();
+            }
+            currOperator.Left = conjunctCollection[conjunctCollection.Count - 2];
+            currOperator.Right = conjunctCollection[conjunctCollection.Count - 1];
+            return result;
+        }
+        private Expression CreateDisjunction(List<Expression> disjunctCollection)
+        {
+            if (disjunctCollection.Count() == 1) return disjunctCollection.First();
+            BinaryOperator result = (BinaryOperator)binaryOperators["|"].Clone();
+            BinaryOperator currOperator = result;
+            for (int i = 0; i < disjunctCollection.Count - 2; i++)
+            {
+                currOperator.Left = disjunctCollection[i];
+                currOperator.Right = (BinaryOperator)binaryOperators["|"].Clone();
+            }
+            currOperator.Left = disjunctCollection[disjunctCollection.Count - 2];
+            currOperator.Right = disjunctCollection[disjunctCollection.Count - 1];
+            return result;
+        }
+
+        public bool IsCNF(Expression expression)
+        {
+            foreach(var item in GetConjunctCollection(expression))
+            {
+                if (((item is UnaryOperator || item is UnaryOperator) && IsAtomic(item)) || 
+                    (item is BinaryOperator && IsCNFOr((BinaryOperator)item))) return false;
+            }
+            return true;
         }
 
         /// <summary>
@@ -151,11 +364,12 @@ namespace ExpertSystemShell.Expressions
             {
                 if (uo.Sign == "!")
                 {
-                    if (IsAtomic(uo))
-                        return NotToAtomary(Reverse(uo.Left));
+                    if(IsAtomic(uo))
+                    {
+                        return Reverse(uo.Left);
+                    }
+                    else return NotToAtomary(Reverse(uo.Left));
                 }
-                uo.Left = NotToAtomary(uo.Left);
-                return uo;
             }
             else
             {
@@ -176,7 +390,8 @@ namespace ExpertSystemShell.Expressions
         /// <returns>Возвращает НЕ(выражение).</returns>
         private Expression Reverse(Expression expression)
         {
-            BinaryOperator bo = expression as BinaryOperator;
+            Expression e = expression.Copy();
+            BinaryOperator bo = e as BinaryOperator;
             if (bo != null)
             {
                 switch (bo.Sign)
@@ -199,7 +414,7 @@ namespace ExpertSystemShell.Expressions
                         }
                     case ("-"):
                         {
-                            UnaryOperator uo = (UnaryOperator)unaryOperators["!"];
+                            UnaryOperator uo = (UnaryOperator)unaryOperators["!"].Clone();
                             uo.Left = bo;
                             return uo;
                         }
@@ -214,7 +429,7 @@ namespace ExpertSystemShell.Expressions
                     return uo.Left;
                 }
             }
-            return expression;
+            return e;
         }
         /// <summary>
         /// проверяет, является ли заданное выражение атомарным (константа, переменная, оператор "-").
@@ -227,9 +442,10 @@ namespace ExpertSystemShell.Expressions
             if (uo != null)
             {
                 return uo.Left is UnaryOperator ||
-                        (uo.Left as BinaryOperator != null && ((BinaryOperator)uo.Left).Sign != "-");
+                        (uo.Left as BinaryOperator != null && ((BinaryOperator)uo.Left).Sign == "-");
             }
-
+            BinaryOperator bo = exp as BinaryOperator;
+            if (bo != null && bo.Sign == "-") return true;
             return exp is Constant || exp is Variable;
         }
         /// <summary>
@@ -284,6 +500,38 @@ namespace ExpertSystemShell.Expressions
                 if (sbo != null)
                 {
                     if (sbo.Sign == "|") return false;
+                    stack.Push(sbo.Left);
+                    stack.Push(sbo.Right);
+                }
+                else
+                {
+                    UnaryOperator uo = currExp as UnaryOperator;
+                    if (uo != null && uo.Sign == "!")
+                    {
+                        if (!IsAtomic(uo.Left)) return false;
+                    }
+                }
+            }
+            return true;
+        }
+        /// <summary>
+        /// Проверяет, является ли заданная дизъюнкция атомарной.
+        /// </summary>
+        /// <param name="bo">Дихъюнкция.</param>
+        /// <returns>Возвращет <c>true</c>, если дизъюнкция является атомарной.</returns>
+        private bool IsCNFOr(BinaryOperator bo)
+        {
+            if (bo.Sign != "|") return false;
+            Stack<Expression> stack = new Stack<Expression>();
+            stack.Push(bo.Left);
+            stack.Push(bo.Right);
+            while (stack.Count > 0)
+            {
+                Expression currExp = stack.Pop();
+                BinaryOperator sbo = currExp as BinaryOperator;
+                if (sbo != null)
+                {
+                    if (sbo.Sign == "&") return false;
                     stack.Push(sbo.Left);
                     stack.Push(sbo.Right);
                 }
