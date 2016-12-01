@@ -16,7 +16,7 @@ namespace ExpertSystemShell.Parsers.Grammars.ProductionModel
     {
         public static Rule Word = Pattern(@"\w+");
         public static Rule Property = Node(Word + ZeroOrMore(WS + Word));
-        public static Rule Value = Node(OneOrMore(SharedGrammar.ExceptCharSet("\' -")));
+        public static Rule Value = Node(Pattern(@"(?<=\s*)(\w)(\s*\w)*(?=\s*\')"));
         public static Rule EqualityOp = Node(MatchString("-"));
 
         //Фактом считается запись '<свойство> - <значение>'
