@@ -74,5 +74,11 @@ namespace Tests
             Assert.IsTrue(q.GetQueriedItems().All((a) => { return a is ProductionFact; }));
             Assert.IsTrue(q.GetQueriedItems().All(a => { return a.Value == "обязательно"; }));
         }
+        [TestMethod]
+        public void TestDbParsing()
+        {
+            IParser parser = new PrModelParser(new LogicalExpressionHelper());
+            parser.ParseRule("Если 'страна-канада' и 'приоритет города-городской отдых' то 'город-oттава'");
+        }
     }
 }

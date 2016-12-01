@@ -27,10 +27,11 @@ namespace Airport
             LogicalExpressionHelper eh = new LogicalExpressionHelper();
             IParser parser = new PrModelParser(eh);
             IExpertSystem expert = new ExpertSystemBase(knBase, solver, parser);
-            string rules = Properties.Resources.knBase;
+            string rules = Properties.Resources.TravelBase;
             expert.AddRules(rules);
-            string query = "если 'желание-купить', 'денег-достаточно', 'расстояние-равно', " +
-                "'цены лучше-РИО' то 'пойти в РИО=?', 'пойти в Рубин=?'";
+            string query = "если 'выбор направления-Европа', 'выбор страны-Испания', 'приоритет отеля-центр города', 'приоритет города-экскурсии', 'количество звезд-4' то 'отель=?'";
+            //string query = "если 'желание-купить', 'денег-достаточно', 'расстояние-равно', " +
+            //    "'цены лучше-РИО' то 'пойти в РИО=?', 'пойти в Рубин=?'";
             ResultingFactSet result = (ResultingFactSet)expert.GetResult(query);
             foreach(var item in result)
             {
