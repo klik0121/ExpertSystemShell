@@ -40,7 +40,6 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
             get { return condition; }
             set { condition = value; }
         }
-
         /// <summary>
         /// Получает или задаёт список действий в правой чсти правила.
         /// </summary>

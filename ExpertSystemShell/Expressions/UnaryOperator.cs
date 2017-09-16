@@ -38,7 +38,6 @@ namespace ExpertSystemShell.Expressions
             this.action = action;
         }
 
-
         /// <summary>
         /// Возвращает результат вычисления выражения.
         /// </summary>
@@ -49,7 +48,6 @@ namespace ExpertSystemShell.Expressions
         {
             return action(left.Calculate());
         }
-
         /// <summary>
         /// Упрощает данное выражение.
         /// </summary>
@@ -122,7 +120,6 @@ namespace ExpertSystemShell.Expressions
             UnaryOperator uo = new UnaryOperator(action, sign, associativity, precendence);
             return uo;
         }
-
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
@@ -151,7 +148,6 @@ namespace ExpertSystemShell.Expressions
             uo.left = left.Copy();
             return uo;
         }
-
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
         /// </summary>

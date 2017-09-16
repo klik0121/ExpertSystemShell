@@ -35,6 +35,14 @@
       <HintPath>..\packages\elkdanger.jigsaw.1.0.0.0\lib\net452\Jigsaw.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MathNet.Numerics, Version=3.17.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.17.0\lib\net40\MathNet.Numerics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MyParallel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\MyParallel\MyParallel\bin\Debug\MyParallel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -70,6 +78,14 @@
     <Compile Include="KnowledgeBases\ProductionModel\AlphaNode.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\BetaMemoryNode.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\BetaNode.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\DefuzzificationMethod.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\FuzzyCartesianProduct.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\FuzzyVariable.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\FuzzySet.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\LinearFuzzySet.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\NFuzzySet.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\OperationType.cs" />
+    <Compile Include="KnowledgeBases\ProductionModel\PolynomialFuzzySet.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProductionFact.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProductionModelExtensions.cs" />
     <Compile Include="KnowledgeBases\ProductionModel\ProductionModelReteNetwork.cs" />

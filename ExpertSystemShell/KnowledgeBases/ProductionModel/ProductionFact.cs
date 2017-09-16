@@ -16,7 +16,7 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
             get { return name; }
             set { name = value; }
         }
-        public string Value
+        public virtual string Value
         {
             get { return this.value; }
             set { this.value = value; }
@@ -28,14 +28,11 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
             this.value = value;
         }
 
-        public static bool operator ==(ProductionFact fact, string value)
+        public virtual double GetConfidence()
         {
-            return fact.value == value;
+            return 1;
         }
-        public static bool operator !=(ProductionFact fact, string value)
-        {
-            return fact.value != value;
-        }
+
         public static bool operator ==(string value, ProductionFact fact)
         {
             return fact.value == value;
@@ -43,6 +40,64 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         public static bool operator !=(string value, ProductionFact fact)
         {
             return fact.value != value;
+        }
+        public double Intersection(ProductionFact fact, OperationType type = OperationType.MinMax)
+        {
+            double x = this.GetConfidence();
+            double y = fact.GetConfidence();
+            int p = 2;
+            switch (type)
+            {
+                case (OperationType.MinMax):
+                    return Math.Min(x, y);
+                case (OperationType.Algebraic):
+                    return x * y;
+                case (OperationType.Conditional):
+                    if (y == 1) return x;
+                    else if (x == 1) return y;
+                    else return 0;
+                case (OperationType.MinMaxAlternative):
+                    return Math.Max(0, x + y - 1);
+                case (OperationType.Exponential):
+                    return 1 - Math.Min(1, Math.Pow(Math.Pow(1 - x, p) + Math.Pow(1 - y, p), 1.0 / p));
+                default:
+                    return 0;
+            }
+        }
+        public double Union(ProductionFact fact, OperationType type = OperationType.MinMax)
+        {
+            double x = this.GetConfidence();
+            double y = fact.GetConfidence();
+            int p = 2;
+            switch (type)
+            {
+                case (OperationType.MinMax):
+                    return Math.Max(x, y);
+                case (OperationType.Algebraic):
+                    return x + y - x * y;
+                case (OperationType.Conditional):
+                    if (y == 0) return x;
+                    else if (x == 0) return y;
+                    else return 1;
+                case (OperationType.MinMaxAlternative):
+                    return Math.Min(1, x + y);
+                case (OperationType.Exponential):
+                    return Math.Min(1, Math.Pow(Math.Pow(x, p) + Math.Pow(y, p), 1.0 / p));
+                default:
+                    return 0;
+            }
+        }
+        public static double operator !(ProductionFact fact)
+        {
+            return 1 - fact.GetConfidence();
+        }
+        public static double operator |(ProductionFact fact1, ProductionFact fact2)
+        {
+            return Math.Max(fact1.GetConfidence(), fact2.GetConfidence());
+        }
+        public static double operator &(ProductionFact fact1, ProductionFact fact2)
+        {
+            return Math.Min(fact1.GetConfidence(), fact2.GetConfidence());
         }
 
         /// <summary>

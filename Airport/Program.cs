@@ -32,7 +32,7 @@ namespace Airport
             string query = "если 'желание-купить', 'денег-достаточно', 'расстояние-равно', " +
                 "'цены лучше-РИО' то 'пойти в РИО=?', 'пойти в Рубин=?'";
             ResultingFactSet result = (ResultingFactSet)expert.GetResult(query);
-            foreach(var item in result)
+            foreach (var item in result)
             {
                 if (item.Value != null)
                     Console.WriteLine(item);

@@ -70,7 +70,7 @@ namespace ExpertSystemShell.Expressions
             }
             return bo;
         }
-        private static List<Expression> GetDisjunctCollection(Expression expression)
+        public  List<Expression> GetDisjunctCollection(Expression expression)
         {
             BinaryOperator bo = expression as BinaryOperator;
             if (bo != null && bo.Sign == "|")
@@ -99,7 +99,7 @@ namespace ExpertSystemShell.Expressions
             return new List<Expression>();
         }
 
-        private static List<Expression> GetConjunctCollection(Expression expression)
+        public List<Expression> GetConjunctCollection(Expression expression)
         {
             BinaryOperator bo = expression as BinaryOperator;
             if (bo != null && bo.Sign == "&")
@@ -216,7 +216,7 @@ namespace ExpertSystemShell.Expressions
             else return GetCNFRec(CreateConjunction(conjunctCollection));
         }
 
-        private Expression CreateConjunction(List<Expression> conjunctCollection)
+        public Expression CreateConjunction(List<Expression> conjunctCollection)
         {
             if (conjunctCollection.Count() == 1) return conjunctCollection.First();
             BinaryOperator result = (BinaryOperator)binaryOperators["&"].Clone();
@@ -230,7 +230,7 @@ namespace ExpertSystemShell.Expressions
             currOperator.Right = conjunctCollection[conjunctCollection.Count - 1];
             return result;
         }
-        private Expression CreateDisjunction(List<Expression> disjunctCollection)
+        public Expression CreateDisjunction(List<Expression> disjunctCollection)
         {
             if (disjunctCollection.Count() == 1) return disjunctCollection.First();
             BinaryOperator result = (BinaryOperator)binaryOperators["|"].Clone();
