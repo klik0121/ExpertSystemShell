@@ -37,6 +37,16 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         {
             return fact.value == value;
         }
+
+        public static bool operator ==(ProductionFact fact, string value)
+        {
+            return value == fact.value;
+        }
+        public static bool operator !=(ProductionFact fact, string value)
+        {
+            return !(value == fact.value);
+        }
+
         public static bool operator !=(string value, ProductionFact fact)
         {
             return fact.value != value;
@@ -108,7 +118,7 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         /// </returns>
         public override string ToString()
         {
-            return string.Format("'{0} - {1}'", name, value != null ? value : "неизвестно");
+            return string.Format("'{0} - {1}'", name, value ?? "неизвестно");
         }
         public override int GetHashCode()
         {

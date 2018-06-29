@@ -15,9 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingConsole", "ParkingCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingForms", "ParkingForms\ParkingForms.csproj", "{2E9E732C-80D5-44E3-98F6-25A9F46E1B2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingDemo", "ParkingDemo\ParkingDemo.csproj", "{7306D7CB-75E0-4D34-99F4-63DD75A127F5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyParallel", "MyParallel\MyParallel.csproj", "{717B427D-AA43-4951-8B57-5C72A42A431E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyParallel", "MyParallel\MyParallel\MyParallel.csproj", "{717B427D-AA43-4951-8B57-5C72A42A431E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +47,6 @@ Global
 		{2E9E732C-80D5-44E3-98F6-25A9F46E1B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E9E732C-80D5-44E3-98F6-25A9F46E1B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E9E732C-80D5-44E3-98F6-25A9F46E1B2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7306D7CB-75E0-4D34-99F4-63DD75A127F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7306D7CB-75E0-4D34-99F4-63DD75A127F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7306D7CB-75E0-4D34-99F4-63DD75A127F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7306D7CB-75E0-4D34-99F4-63DD75A127F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{717B427D-AA43-4951-8B57-5C72A42A431E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{717B427D-AA43-4951-8B57-5C72A42A431E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{717B427D-AA43-4951-8B57-5C72A42A431E}.Release|Any CPU.ActiveCfg = Release|Any CPU

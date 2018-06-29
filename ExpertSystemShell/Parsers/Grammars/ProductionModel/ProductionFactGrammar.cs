@@ -14,7 +14,7 @@ namespace ExpertSystemShell.Parsers.Grammars.ProductionModel
     /// <seealso cref="Diggins.Jigsaw.SharedGrammar" />
     public class ProductionFactGrammar: SharedGrammar
     {
-        public static Rule Word = Pattern(@"\w+");
+        public static Rule Word = Pattern(@"[\w&!\.,]+");
         public static Rule Property = Node(Word + ZeroOrMore(WS + Word));
         public static Rule Value = Node(Pattern(@"(?<=\s*)(\w)(\s*\w)*(?=\s*\')"));
         public static Rule EqualityOp = Node(MatchString("-"));

@@ -60,8 +60,9 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         /// <param name="parent">Текущий родитель.</param>
         public override void AddFact(IData fact, ReteNode parent)
         {
-            predicate.SetVariable(fact.Name, fact);
-            if(predicate.Calculate() == true)
+            var clonedPred = predicate.Copy();
+            clonedPred.SetVariable(fact.Name, fact);
+            if(clonedPred.Calculate().Equals(true))
             {
                 alphaMemory.Add(fact);
                 base.AddFact(fact, this);

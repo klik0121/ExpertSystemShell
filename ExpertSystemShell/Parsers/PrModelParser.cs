@@ -90,14 +90,14 @@ namespace ExpertSystemShell.Parsers
             try
             {
                 Node n = ProductionRuleGrammar.ProductionRuleList.Parse(rules)[0];
+                if(n.Text.Length != rules.Length)
+                    throw new ParsingException("Разбор завершился преждевременно.");
                 foreach(var child in n.Nodes)
-                {
                     statements.Add(stBuilders[child.Label].Build(child));
-                }
             }
-            catch
+            catch(Exception e)
             {
-                throw new ParsingException("Заданная строка содержит некорректный список правил.");
+                throw new ParsingException("Заданная строка содержит некорректный список правил.", e);
             }
             return statements;
         }

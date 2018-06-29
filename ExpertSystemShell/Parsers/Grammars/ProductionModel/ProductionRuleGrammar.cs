@@ -23,7 +23,7 @@ namespace ExpertSystemShell.Parsers.Grammars.ProductionModel
             ProductionActionGrammar.ProductionActionList);
         public static Rule Delimiter = MatchStringSet(";");
         public static Rule ProductionRuleList = Node(WS + ProductionRule +
-            ZeroOrMore(WS + Delimiter + WS + ProductionRule) + WS);
+            ZeroOrMore(WS + Delimiter + WS + ProductionRule) + WS + Opt(Delimiter));
 
         static ProductionRuleGrammar()
         {

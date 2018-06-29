@@ -13,6 +13,7 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
     public class BetaNode: ReteNode
     {
         protected byte waitingInputs;
+        public bool IsActive { get; protected set; }
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="BetaNode"/>.
@@ -20,6 +21,7 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         public BetaNode(): base(2, 0)
         {
             waitingInputs = 2;
+            IsActive = false;
         }
 
         /// <summary>
@@ -46,12 +48,19 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         /// <param name="parent">Текущий родитель.</param>
         public override void AddFact(IData fact, ReteNode parent)
         {
-            foreach(var item in inputs)
+            var other = inputs[0] == parent ? inputs[1] : inputs[0];
+            var otherAlpha = other as AlphaNode;
+            if (otherAlpha != null && otherAlpha.AlphaMemory.Any())
             {
-                if (((AlphaNode)item).AlphaMemory.Count == 0)
-                    return;
+                IsActive = true;
+                base.AddFact(fact, parent);
             }
-            base.AddFact(fact, parent);
+            var otherBeta = other as BetaNode;
+            if (otherBeta != null && otherBeta.IsActive)
+            {
+                IsActive = true;
+                base.AddFact(fact, parent);
+            }
         }
         /// <summary>
         /// Сливает текущий нод с заданным.

@@ -291,7 +291,9 @@ namespace ExpertSystemShell.Expressions
         {
             base.CreateBooleanOperators();
             binaryOperators.Add("-", new BinaryOperator((a, b) =>
-                { return a == b;} , "-", Associativity.Left, 10));
+            {
+                return a == b;
+            }, "-", Associativity.Left, 10));
         }
 
         /// <summary>
