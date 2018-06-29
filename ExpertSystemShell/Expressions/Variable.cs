@@ -15,6 +15,11 @@ namespace ExpertSystemShell.Expressions
         protected string name;
         protected dynamic value;
 
+        public override int Specificity
+        {
+            get { return 0; }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Variable"/> class.
         /// </summary>

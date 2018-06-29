@@ -15,6 +15,11 @@ namespace ExpertSystemShell.Expressions
         protected Func<dynamic, dynamic> action;
         protected Expression left;
 
+        public override int Specificity
+        {
+            get { return 1; }
+        }
+
         /// <summary>
         /// Аргумент оператора.
         /// </summary>

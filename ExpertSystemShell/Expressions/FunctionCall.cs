@@ -17,6 +17,11 @@ namespace ExpertSystemShell.Expressions
         protected Expression[] args;
         protected int argsCount;
 
+        public override int Specificity
+        {
+            get { return Arguments.Sum(a => a.Specificity) + 1; }
+        }
+
         /// <summary>
         /// Аргументы функции.
         /// </summary>

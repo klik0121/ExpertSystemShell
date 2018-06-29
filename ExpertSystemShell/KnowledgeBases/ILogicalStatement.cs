@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using ExpertSystemShell.KnowledgeBases;
@@ -23,6 +24,7 @@ namespace ExpertSystemShell.KnowledgeBases
             get;
             set;
         }
+        int Specificity { get; }
         /// <summary>
         /// Выполняет текущее утверждение в заданной базе знаний.
         /// </summary>

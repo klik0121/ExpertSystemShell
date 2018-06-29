@@ -114,10 +114,12 @@
     <Compile Include="Solvers\ILogicalSolver.cs" />
     <Compile Include="Solvers\IProductionSolver.cs" />
     <Compile Include="Solvers\ProductionModel\AbstractProductionSolver.cs" />
+    <Compile Include="Solvers\ProductionModel\DepthFirstDirectProductionSolver.cs" />
     <Compile Include="Solvers\ProductionModel\DirectProductionSolver.cs" />
     <Compile Include="Solvers\ProductionModel\ProductionFactQuery.cs" />
     <Compile Include="Solvers\ProductionModel\ResultingFactSet.cs" />
     <Compile Include="Solvers\ProductionModel\ReverseProductionSolver.cs" />
+    <Compile Include="Solvers\ProductionModel\SimplicityFirstDirectSolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CodeProjectArticle.html" />

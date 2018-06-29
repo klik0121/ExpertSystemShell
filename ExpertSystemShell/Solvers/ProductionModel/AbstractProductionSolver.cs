@@ -41,12 +41,13 @@ namespace ExpertSystemShell.Solvers.ProductionModel
         /// Выбирает одно правило из оставшихся равноправных правил, используя какую-нибудь
         /// эвристику (хоть рандомом).
         /// </summary>
-        /// <param name="statements">The statements.</param>
+        /// <param name="statements">Список правил в порядке активации</param>
         /// <returns></returns>
-        public ILogicalStatement ChooseOne(ICollection<ILogicalStatement> statements)
+        public virtual ILogicalStatement ChooseOne(ICollection<ILogicalStatement> statements)
         {
+            //т.к. правила находятся в поряке активации, то первое правило в коллекции
+            //даст нам breadth first strategy
             ILogicalStatement result = statements.First();
-            statements.Remove(result);
             return result;
         }
         /// <summary>

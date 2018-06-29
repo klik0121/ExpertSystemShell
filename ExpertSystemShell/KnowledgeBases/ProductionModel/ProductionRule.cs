@@ -18,6 +18,11 @@ namespace ExpertSystemShell.KnowledgeBases.ProductionModel
         protected Expression condition;
         protected IEnumerable<IKnowledgeBaseAction> actions;
 
+        public int Specificity
+        {
+            get { return condition.Specificity; }
+        }
+
         /// <summary>
         /// Получает или задёт имя текущего утверждения.
         /// </summary>

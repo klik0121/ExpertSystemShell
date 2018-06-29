@@ -14,6 +14,11 @@ namespace ExpertSystemShell.Expressions
     {
         protected dynamic value;
 
+        public override int Specificity
+        {
+            get { return 0; }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Constant"/> class.
         /// </summary>

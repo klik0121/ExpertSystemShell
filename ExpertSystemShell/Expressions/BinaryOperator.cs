@@ -16,6 +16,12 @@ namespace ExpertSystemShell.Expressions
         protected Expression left;
         protected Expression right;
 
+
+        public override int Specificity
+        {
+            get { return left.Specificity + right.Specificity + 1; }
+        }
+
         /// <summary>
         /// Левый аргумент оператора.
         /// </summary>

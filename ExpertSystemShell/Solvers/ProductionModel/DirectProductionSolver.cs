@@ -21,6 +21,7 @@ namespace ExpertSystemShell.Solvers.ProductionModel
         /// <param name="knBase">База знаний.</param>
         public DirectProductionSolver(IKnowledgeBase knBase): base(knBase)
         {
+
         }
         /// <summary>
         /// Получает ответ на логический запрос.
@@ -43,6 +44,7 @@ namespace ExpertSystemShell.Solvers.ProductionModel
             while (ready.Count > 0 && queriedData.Count((a) => { return a.Value == null; }) > 0)
             {
                 ILogicalStatement st = ChooseOne(ready);
+                ready.Remove(st);
                 st.Execute(knBase);
                 if(knBase.StateChanged)
                 {

@@ -23,7 +23,9 @@ namespace Airport
         {
             IStorageService service = new PrMInMemoryStService();
             IKnowledgeBase knBase = new ProductionModelReteNetwork(service);
-            IProductionSolver solver = new DirectProductionSolver(knBase);
+            //IProductionSolver solver = new DirectProductionSolver(knBase); //breadth first
+            //IProductionSolver solver = new DepthFirstDirectProductionSolver(knBase); //depth first;
+            IProductionSolver solver = new SimplicityFirstDirectSolver(knBase); //simplicity first;
             LogicalExpressionHelper eh = new LogicalExpressionHelper();
             IParser parser = new PrModelParser(eh);
             IExpertSystem expert = new ExpertSystemBase(knBase, solver, parser);

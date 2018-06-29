@@ -17,3 +17,4 @@ C:\Users\dru01\Documents\Visual Studio 2013\Projects\ExpertSystemShell\ExpertSys
 C:\Users\dru01\Documents\Visual Studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\bin\Debug\MyParallel.pdb
 C:\Users\dru01\Documents\Visual Studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\obj\Debug\ExpertSystemShell.dll
 C:\Users\dru01\Documents\Visual Studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\obj\Debug\ExpertSystemShell.pdb
+C:\Users\dru01\Documents\Visual Studio 2013\Projects\ExpertSystemShell\ExpertSystemShell\obj\Debug\ExpertSystemShell.csprojResolveAssemblyReference.cache

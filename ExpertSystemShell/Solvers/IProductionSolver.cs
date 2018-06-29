@@ -19,7 +19,7 @@ namespace ExpertSystemShell.Solvers
         /// Выбирает одно правило из оставшихся равноправных правил, используя какую-нибудь 
         /// эвристику (хоть рандомом).
         /// </summary>
-        /// <param name="statements">The statements.</param>
+        /// <param name="statements">Список правил в порядке активации.</param>
         /// <returns></returns>
         ILogicalStatement ChooseOne(ICollection<ILogicalStatement> statements);
     }
